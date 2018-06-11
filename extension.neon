@@ -1,0 +1,24 @@
+parameters:
+	banned_code:
+		eval: true
+		exit: true
+		functions:
+			- dump
+			- print_r
+			- var_dump
+
+services:
+	-
+		class: PHPStan\Rules\BannedEvalRule(%banned_code.eval%)
+		tags:
+			- phpstan.rules.rule
+
+	-
+		class: PHPStan\Rules\BannedExitRule(%banned_code.exit%)
+		tags:
+			- phpstan.rules.rule
+
+	-
+		class: PHPStan\Rules\BannedFunctionsRule(%banned_code.functions%)
+		tags:
+			- phpstan.rules.rule
