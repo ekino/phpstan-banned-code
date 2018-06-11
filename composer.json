@@ -1,0 +1,30 @@
+{
+    "name": "phpstan/phpstan-banned-code",
+    "description": "Detected banned code using PHPStan",
+    "license": "proprietary",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "PHPStan\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\PHPStan\\": "tests"
+        }
+    },
+
+    "minimum-stability": "stable",
+
+    "require": {
+        "php":                     "^7.1",
+        "phpstan/phpdoc-parser":   "dev-master@dev",
+        "phpstan/phpstan":         "dev-master@dev",
+        "phpstan/phpstan-phpunit": "dev-master@dev"
+    },
+    "require-dev": {
+        "phpunit/phpunit":             "^7.2",
+        "friendsofphp/php-cs-fixer":   "^2.12",
+        "sensiolabs/security-checker": "^4.1"
+    }
+}
