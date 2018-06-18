@@ -14,17 +14,23 @@
         }
     },
 
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
 
     "require": {
         "php":                     "^7.1",
-        "phpstan/phpdoc-parser":   "dev-master@dev",
-        "phpstan/phpstan":         "dev-master@dev",
-        "phpstan/phpstan-phpunit": "dev-master@dev"
+        "phpstan/phpstan":         "^0.10",
+        "phpstan/phpstan-phpunit": "^0.10"
     },
     "require-dev": {
         "phpunit/phpunit":             "^7.2",
         "friendsofphp/php-cs-fixer":   "^2.12",
         "sensiolabs/security-checker": "^4.1"
+    },
+
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.10-dev"
+        }
     }
 }
