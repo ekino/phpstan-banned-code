@@ -29,6 +29,11 @@ parameters:
 		exit: true          # enable detection of `die/exit`
 		functions:          # banned functions
 			- dump
+			- exec
+			- passthru
 			- print_r
+			- proc_open
+			- shell_exec
+			- system
 			- var_dump
 ```
