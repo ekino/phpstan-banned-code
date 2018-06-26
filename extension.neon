@@ -4,7 +4,12 @@ parameters:
 		exit: true
 		functions:
 			- dump
+			- exec
+			- passthru
 			- print_r
+			- proc_open
+			- shell_exec
+			- system
 			- var_dump
 
 services:
