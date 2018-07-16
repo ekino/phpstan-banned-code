@@ -25,9 +25,9 @@ You can configure this library with parameters:
 ```
 parameters:
 	banned_code:
-		eval: true          # enable detection of `eval`
-		exit: true          # enable detection of `die/exit`
-		functions:          # banned functions
+		eval: true              # enable detection of `eval`
+		exit: true              # enable detection of `die/exit`
+		functions:              # banned functions
 			- dump
 			- exec
 			- passthru
@@ -36,4 +36,5 @@ parameters:
 			- shell_exec
 			- system
 			- var_dump
+		use_from_tests: true    # enable detection of `use Tests\Foo\Bar` in a non-test file
 ```
