@@ -28,6 +28,7 @@ parameters:
 		eval: true              # enable detection of `eval`
 		exit: true              # enable detection of `die/exit`
 		functions:              # banned functions
+			- debug_backtrace
 			- dump
 			- exec
 			- passthru
