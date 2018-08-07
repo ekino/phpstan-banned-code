@@ -3,6 +3,7 @@ parameters:
 		eval: true
 		exit: true
 		functions:
+			- debug_backtrace
 			- dump
 			- exec
 			- passthru
