@@ -1,8 +1,5 @@
 # PHPStan Banned Code
 
-[![pipeline status](https://gitlab.ekino.com/php-labs/phpstan/phpstan-banned-code/badges/master/pipeline.svg)](https://gitlab.ekino.com/php-labs/phpstan/phpstan-banned-code/commits/master)
-[![coverage report](https://gitlab.ekino.com/php-labs/phpstan/phpstan-banned-code/badges/master/coverage.svg)](https://gitlab.ekino.com/php-labs/phpstan/phpstan-banned-code/commits/master)
-
 ## Basic usage
 
 To use this extension, require it using [Composer](https://getcomposer.org/):
