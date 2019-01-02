@@ -1,8 +1,8 @@
 {
-    "name": "phpstan/phpstan-banned-code",
+    "name": "ekino/phpstan-banned-code",
     "description": "Detected banned code using PHPStan",
-    "license": "proprietary",
-    "type": "project",
+    "license": "MIT",
+    "type": "library",
     "autoload": {
         "psr-4": {
             "PHPStan\\": "src"
@@ -13,10 +13,8 @@
             "Tests\\PHPStan\\": "tests"
         }
     },
-
     "minimum-stability": "dev",
     "prefer-stable": true,
-
     "require": {
         "php":                     "^7.1",
         "phpstan/phpstan":         "^0.10",
