@@ -5,14 +5,14 @@
 To use this extension, require it using [Composer](https://getcomposer.org/):
 
 ```bash
-composer require --dev phpstan/phpstan-banned-code
+composer require --dev ekino/phpstan-banned-code
 ```
 
 And include extension.neon in your project's PHPStan config:
 
 ```
 includes:
-	- vendor/phpstan/phpstan-banned-code/extension.neon
+	- vendor/ekino/phpstan-banned-code/extension.neon
 ```
 
 ## Advanced usage
