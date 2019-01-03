@@ -16,21 +16,21 @@ parameters:
 
 services:
 	-
-		class: PHPStan\Rules\BannedEvalRule(%banned_code.eval%)
+		class: Ekino\PHPStanBannedCode\Rules\BannedEvalRule(%banned_code.eval%)
 		tags:
 			- phpstan.rules.rule
 
 	-
-		class: PHPStan\Rules\BannedExitRule(%banned_code.exit%)
+		class: Ekino\PHPStanBannedCode\Rules\BannedExitRule(%banned_code.exit%)
 		tags:
 			- phpstan.rules.rule
 
 	-
-		class: PHPStan\Rules\BannedFunctionsRule(%banned_code.functions%)
+		class: Ekino\PHPStanBannedCode\Rules\BannedFunctionsRule(%banned_code.functions%)
 		tags:
 			- phpstan.rules.rule
 
 	-
-		class: PHPStan\Rules\BannedUseTestRule(%banned_code.use_from_tests%)
+		class: Ekino\PHPStanBannedCode\Rules\BannedUseTestRule(%banned_code.use_from_tests%)
 		tags:
 			- phpstan.rules.rule

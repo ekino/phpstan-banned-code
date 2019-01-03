@@ -1,20 +1,17 @@
 {
     "name": "ekino/phpstan-banned-code",
-    "description": "Detected banned code using PHPStan",
-    "license": "MIT",
     "type": "library",
-    "autoload": {
-        "psr-4": {
-            "PHPStan\\": "src"
+    "description": "Detected banned code using PHPStan",
+    "keywords": ["PHPStan", "Code Quality"],
+    "homepage": "https://github.com/ekino/phpstan-banned-code",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rémi Marseille",
+            "email": "remi.marseille@ekino.com",
+            "homepage": "https://www.ekino.com"
         }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\PHPStan\\": "tests"
-        }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
+    ],
     "require": {
         "php":                     "^7.1",
         "phpstan/phpstan":         "^0.10",
@@ -25,6 +22,18 @@
         "friendsofphp/php-cs-fixer":   "^2.12",
         "sensiolabs/security-checker": "^4.1"
     },
+    "autoload": {
+        "psr-4": {
+            "Ekino\\PHPStanBannedCode\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Ekino\\PHPStanBannedCode\\": "tests"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
 
     "extra": {
         "branch-alias": {

@@ -1,0 +1,23 @@
+language: php
+
+php:
+  - '7.1'
+  - '7.2'
+
+dist: trusty
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
+before_install: composer self-update
+
+install: make app-install
+
+script:
+  - make app-composer-validate
+  - make app-test-with-code-coverage
+  - make app-static-analysis
+  - make app-cs-check
+  - make app-security-check

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the phpstan/phpstan-banned-code project.
+ * This file is part of the ekino/phpstan-banned-code project.
  *
  * (c) Ekino
  *
@@ -9,18 +9,18 @@
  * file that was distributed with this source code.
  */
 
-namespace Tests\PHPStan\Rules;
+namespace Tests\Ekino\PHPStanBannedCode\Rules;
 
+use Ekino\PHPStanBannedCode\Rules\BannedFunctionsRule;
 use PhpParser\Node;
 use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Name;
 use PHPStan\Analyser\Scope;
-use PHPStan\Rules\BannedFunctionsRule;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @author Rémi Marseille <marseille@ekino.com>
+ * @author Rémi Marseille <remi.marseille@ekino.com>
  */
 class BannedFunctionsRuleTest extends TestCase
 {
