@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the phpstan/phpstan-banned-code project.
+ * This file is part of the ekino/phpstan-banned-code project.
  *
  * (c) Ekino
  *
@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace PHPStan\Rules;
+namespace Ekino\PHPStanBannedCode\Rules;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr\Exit_;
@@ -17,7 +17,7 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
 
 /**
- * @author Rémi Marseille <marseille@ekino.com>
+ * @author Rémi Marseille <remi.marseille@ekino.com>
  */
 class BannedExitRule implements Rule
 {

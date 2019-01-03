@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the phpstan/phpstan-banned-code project.
+ * This file is part of the ekino/phpstan-banned-code project.
  *
  * (c) Ekino
  *
@@ -9,15 +9,15 @@
  * file that was distributed with this source code.
  */
 
-namespace Tests\PHPStan\Rules;
+namespace Tests\Ekino\PHPStanBannedCode\Rules;
 
+use Ekino\PHPStanBannedCode\Rules\BannedEvalRule;
 use PhpParser\Node\Expr\Eval_;
 use PHPStan\Analyser\Scope;
-use PHPStan\Rules\BannedEvalRule;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @author Rémi Marseille <marseille@ekino.com>
+ * @author Rémi Marseille <remi.marseille@ekino.com>
  */
 class BannedEvalRuleTest extends TestCase
 {

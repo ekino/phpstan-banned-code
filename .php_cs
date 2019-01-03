@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the phpstan/phpstan-banned-code project.
+ * This file is part of the ekino/phpstan-banned-code project.
  *
  * (c) Ekino
  *
@@ -10,7 +10,7 @@
  */
 
 $header = <<<EOF
-This file is part of the phpstan/phpstan-banned-code project.
+This file is part of the ekino/phpstan-banned-code project.
 
 (c) Ekino
 
