@@ -24,6 +24,7 @@ parameters:
 	banned_code:
 		eval: true              # enable detection of `eval`
 		exit: true              # enable detection of `die/exit`
+		echo: true              # enable detection of `echo`
 		functions:              # banned functions
 			- debug_backtrace
 			- dump
