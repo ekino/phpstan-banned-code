@@ -49,7 +49,7 @@ class BannedFunctionsRule implements Rule
     public function processNode(Node $node, Scope $scope): array
     {
         if (!$node instanceof FuncCall) {
-            throw new \InvalidArgumentException(sprintf('$node must be an instance of %s, %s given', FuncCall::class, get_class($node)));
+            throw new \InvalidArgumentException(sprintf('$node must be an instance of %s, %s given', FuncCall::class, \get_class($node)));
         }
 
         if (!$node->name instanceof Name) {
@@ -58,7 +58,7 @@ class BannedFunctionsRule implements Rule
 
         $function = $node->name->toString();
 
-        if (in_array($function, $this->bannedFunctions)) {
+        if (\in_array($function, $this->bannedFunctions)) {
             return [sprintf('Should not use "%s", please change the code.', $function)];
         }
 

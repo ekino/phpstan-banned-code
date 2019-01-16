@@ -60,7 +60,7 @@ class BannedUseTestRule implements Rule
         }
 
         if (!$node instanceof Use_) {
-            throw new \InvalidArgumentException(sprintf('$node must be an instance of %s, %s given', Use_::class, get_class($node)));
+            throw new \InvalidArgumentException(sprintf('$node must be an instance of %s, %s given', Use_::class, \get_class($node)));
         }
 
         $errors = [];

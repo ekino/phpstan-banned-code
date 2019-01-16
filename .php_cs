@@ -31,6 +31,7 @@ return PhpCsFixer\Config::create()
         'lowercase_constants' => true,
         'lowercase_keywords' => true,
         'method_separation' => true,
+        'native_function_invocation' => ['include' => ['@compiler_optimized']],
         'no_alias_functions' => true,
         'no_closing_tag' => true,
         'no_extra_consecutive_blank_lines' => [
