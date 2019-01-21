@@ -1,32 +1,39 @@
 parameters:
 	banned_code:
-		eval: true
-		exit: true
-		functions:
-			- debug_backtrace
-			- dump
-			- exec
-			- passthru
-			- print_r
-			- proc_open
-			- shell_exec
-			- system
-			- var_dump
+		nodes:
+			# enable detection of echo
+			-
+				type: Stmt_Echo
+
+			# enable detection of eval
+			-
+				type: Expr_Eval
+
+			# enable detection of die/exit
+			-
+				type: Expr_Exit
+
+			# enable detection of a set of functions
+			-
+				type: Expr_FuncCall
+				functions:
+					- debug_backtrace
+					- dump
+					- exec
+					- passthru
+					- phpinfo
+					- print_r
+					- proc_open
+					- shell_exec
+					- system
+					- var_dump
+
+		# enable detection of `use Tests\Foo\Bar` in a non-test file
 		use_from_tests: true
 
 services:
 	-
-		class: Ekino\PHPStanBannedCode\Rules\BannedEvalRule(%banned_code.eval%)
-		tags:
-			- phpstan.rules.rule
-
-	-
-		class: Ekino\PHPStanBannedCode\Rules\BannedExitRule(%banned_code.exit%)
-		tags:
-			- phpstan.rules.rule
-
-	-
-		class: Ekino\PHPStanBannedCode\Rules\BannedFunctionsRule(%banned_code.functions%)
+		class: Ekino\PHPStanBannedCode\Rules\BannedNodesRule(%banned_code.nodes%)
 		tags:
 			- phpstan.rules.rule
 
