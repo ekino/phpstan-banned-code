@@ -13,11 +13,11 @@
         }
     ],
     "require": {
-        "php":                     "^7.1",
-        "phpstan/phpstan":         "^0.10",
-        "phpstan/phpstan-phpunit": "^0.10"
+        "php":             "^7.1",
+        "phpstan/phpstan": "^0.11"
     },
     "require-dev": {
+        "phpstan/phpstan-phpunit":     "^0.11",
         "phpunit/phpunit":             "^7.2",
         "friendsofphp/php-cs-fixer":   "^2.12",
         "sensiolabs/security-checker": "^5.0"
