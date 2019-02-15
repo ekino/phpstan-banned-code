@@ -50,7 +50,7 @@ class BannedNodesRule implements Rule
     {
         $type = $node->getType();
 
-        if (!array_key_exists($type, $this->bannedNodes)) {
+        if (!\array_key_exists($type, $this->bannedNodes)) {
             return [];
         }
 
