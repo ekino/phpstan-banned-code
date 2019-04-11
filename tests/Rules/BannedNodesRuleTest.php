@@ -18,6 +18,7 @@ use PhpParser\Node\Expr\Eval_;
 use PhpParser\Node\Expr\Exit_;
 use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Expr\Include_;
+use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Name;
 use PHPStan\Analyser\Scope;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -39,9 +40,9 @@ class BannedNodesRuleTest extends TestCase
     private $scope;
 
     /**
-     * Initializes the tests.
+     * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->rule  = new BannedNodesRule([
             ['type' => 'Stmt_Echo'],
@@ -55,7 +56,7 @@ class BannedNodesRuleTest extends TestCase
     /**
      * Tests getNodeType.
      */
-    public function testGetNodeType()
+    public function testGetNodeType(): void
     {
         $this->assertSame(Node::class, $this->rule->getNodeType());
     }
@@ -67,7 +68,7 @@ class BannedNodesRuleTest extends TestCase
      *
      * @dataProvider getUnhandledNodes
      */
-    public function testProcessNodeWithUnhandledType(Expr $node)
+    public function testProcessNodeWithUnhandledType(Expr $node): void
     {
         $this->assertCount(0, $this->rule->processNode($node, $this->scope));
     }
@@ -75,7 +76,7 @@ class BannedNodesRuleTest extends TestCase
     /**
      * Tests processNode with banned/allowed functions.
      */
-    public function testProcessNodeWithFunctions()
+    public function testProcessNodeWithFunctions(): void
     {
         foreach (['debug_backtrace', 'dump'] as $bannedFunction) {
             $node = new FuncCall(new Name($bannedFunction));
@@ -88,6 +89,10 @@ class BannedNodesRuleTest extends TestCase
 
             $this->assertCount(0, $this->rule->processNode($node, $this->scope));
         }
+
+        $node = new FuncCall(new Variable('myClosure'));
+
+        $this->assertCount(0, $this->rule->processNode($node, $this->scope));
     }
 
     /**
@@ -97,7 +102,7 @@ class BannedNodesRuleTest extends TestCase
      *
      * @dataProvider getHandledNodes
      */
-    public function testProcessNodeWithHandledTypes(Expr $node)
+    public function testProcessNodeWithHandledTypes(Expr $node): void
     {
         $this->assertCount(1, $this->rule->processNode($node, $this->scope));
     }
@@ -105,7 +110,7 @@ class BannedNodesRuleTest extends TestCase
     /**
      * @return \Generator
      */
-    public function getUnhandledNodes()
+    public function getUnhandledNodes(): \Generator
     {
         yield [new Include_($this->createMock(Expr::class), Include_::TYPE_INCLUDE)];
     }
@@ -113,7 +118,7 @@ class BannedNodesRuleTest extends TestCase
     /**
      * @return \Generator
      */
-    public function getHandledNodes()
+    public function getHandledNodes(): \Generator
     {
         yield [new Eval_($this->createMock(Expr::class))];
         yield [new Exit_()];
