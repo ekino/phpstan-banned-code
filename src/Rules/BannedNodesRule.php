@@ -13,6 +13,7 @@ namespace Ekino\PHPStanBannedCode\Rules;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr\FuncCall;
+use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Name;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
@@ -55,6 +56,10 @@ class BannedNodesRule implements Rule
         }
 
         if ($node instanceof FuncCall) {
+            if ($node->name instanceof Variable) {
+                return [];
+            }
+
             if (!$node->name instanceof Name) {
                 throw new \RuntimeException(sprintf('Expected instance of %s for $node->name, %s given', Name::class, \get_class($node->name)));
             }

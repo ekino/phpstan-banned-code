@@ -36,9 +36,9 @@ class BannedUseTestRuleTest extends TestCase
     private $scope;
 
     /**
-     * Initializes the tests.
+     * {@inheritdoc}
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->rule  = new BannedUseTestRule();
         $this->scope = $this->createMock(Scope::class);
@@ -47,7 +47,7 @@ class BannedUseTestRuleTest extends TestCase
     /**
      * Tests getNodeType.
      */
-    public function testGetNodeType()
+    public function testGetNodeType(): void
     {
         $this->assertSame(Use_::class, $this->rule->getNodeType());
     }
@@ -55,7 +55,7 @@ class BannedUseTestRuleTest extends TestCase
     /**
      * Tests processNode if disabled.
      */
-    public function testProcessNodeIfDisabled()
+    public function testProcessNodeIfDisabled(): void
     {
         $this->scope->expects($this->never())->method('getNamespace');
 
@@ -65,7 +65,7 @@ class BannedUseTestRuleTest extends TestCase
     /**
      * Tests processNode with test scope.
      */
-    public function testProcessNodeWithTestScope()
+    public function testProcessNodeWithTestScope(): void
     {
         $this->scope->expects($this->once())->method('getNamespace')->willReturn('Tests\\Foo\\Bar');
 
@@ -77,7 +77,7 @@ class BannedUseTestRuleTest extends TestCase
      *
      * @expectedException \InvalidArgumentException
      */
-    public function testProcessNodeThrowsException()
+    public function testProcessNodeThrowsException(): void
     {
         $this->scope->expects($this->once())->method('getNamespace')->willReturn('Foo\\Bar');
 
@@ -87,7 +87,7 @@ class BannedUseTestRuleTest extends TestCase
     /**
      * Tests processNode with errors.
      */
-    public function testProcessNodeWithErrors()
+    public function testProcessNodeWithErrors(): void
     {
         $this->scope->expects($this->once())->method('getNamespace')->willReturn('Foo\\Bar');
 

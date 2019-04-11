@@ -19,7 +19,7 @@ app-install: ## to install app
 	composer install --prefer-dist
 
 app-security-check: ## to check if any security issues in the PHP dependencies
-	vendor/bin/security-checker security:check --end-point=http://security.sensiolabs.org/check_lock
+	vendor/bin/security-checker security:check
 
 app-static-analysis: ## to run static analysis
 	php -dmemory_limit=-1 vendor/bin/phpstan analyze src tests -l 7
