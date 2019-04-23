@@ -10,7 +10,7 @@ composer require --dev ekino/phpstan-banned-code
 
 And include extension.neon in your project's PHPStan config:
 
-```
+```neon
 includes:
 	- vendor/ekino/phpstan-banned-code/extension.neon
 ```
@@ -19,7 +19,7 @@ includes:
 
 You can configure this library with parameters:
 
-```
+```neon
 parameters:
 	banned_code:
 		nodes:
