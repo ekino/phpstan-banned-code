@@ -25,6 +25,8 @@ return PhpCsFixer\Config::create()
         'array_syntax' => ['syntax' => 'short'],
         'binary_operator_spaces' => ['align_double_arrow' => true, 'align_equals' => true],
         'blank_line_after_namespace' => true,
+        'blank_line_after_opening_tag' => true,
+        'declare_strict_types' => true,
         'header_comment' => ['header' => $header],
         'indentation_type' => true,
         'linebreak_after_opening_tag' => true,
