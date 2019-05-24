@@ -1,5 +1,10 @@
 # PHPStan Banned Code
 
+[![Latest Stable Version](https://poser.pugx.org/ekino/phpstan-banned-code/v/stable)](https://packagist.org/packages/ekino/phpstan-banned-code)
+[![Build Status](https://travis-ci.org/ekino/phpstan-banned-code.svg?branch=master)](https://travis-ci.org/ekino/phpstan-banned-code)
+[![Coverage Status](https://coveralls.io/repos/ekino/phpstan-banned-code/badge.svg?branch=master&service=github)](https://coveralls.io/github/ekino/phpstan-banned-code?branch=master)
+[![Total Downloads](https://poser.pugx.org/ekino/phpstan-banned-code/downloads)](https://packagist.org/packages/ekino/phpstan-banned-code)
+
 ## Basic usage
 
 To use this extension, require it using [Composer](https://getcomposer.org/):

@@ -1,0 +1,3 @@
+coverage_clover: build/phpunit/clover.xml
+json_path: build/phpunit/coveralls-upload.json
+service_name: travis-ci
