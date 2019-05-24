@@ -1,8 +1,17 @@
 language: php
 
+branches:
+  only:
+    - master
+
 php:
   - '7.1'
   - '7.2'
+  - '7.3'
+
+env:
+  global:
+    - TARGET=ci
 
 dist: trusty
 sudo: false
@@ -13,11 +22,16 @@ cache:
 
 before_install: composer self-update
 
-install: make app-install
+before_install:
+  - composer self-update
+  - if [ -x .travis/before_install_${TARGET}.sh ]; then .travis/before_install_${TARGET}.sh; fi;
+
+install:
+  - if [ -x .travis/install_${TARGET}.sh ]; then .travis/install_${TARGET}.sh; fi;
 
 script:
-  - make app-composer-validate
-  - make app-test-with-code-coverage
-  - make app-static-analysis
-  - make app-cs-check
-  - make app-security-check
+  - make $TARGET
+
+after_success:
+  - if [ -x .travis/after_success_${TARGET}.sh ]; then .travis/after_success_${TARGET}.sh; fi;
+
