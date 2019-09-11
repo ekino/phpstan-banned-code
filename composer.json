@@ -1,6 +1,6 @@
 {
     "name": "ekino/phpstan-banned-code",
-    "type": "library",
+    "type": "phpstan-extension",
     "description": "Detected banned code using PHPStan",
     "keywords": ["PHPStan", "Code Quality"],
     "homepage": "https://github.com/ekino/phpstan-banned-code",
