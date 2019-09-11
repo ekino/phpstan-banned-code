@@ -20,7 +20,7 @@ When you use https://github.com/phpstan/extension-installer you are done.
 
 If not, include `extension.neon` in your project's PHPStan config:
 
-```neon
+```
 includes:
 	- vendor/ekino/phpstan-banned-code/extension.neon
 ```
@@ -29,7 +29,7 @@ includes:
 
 You can configure this library with parameters:
 
-```neon
+```
 parameters:
 	banned_code:
 		nodes:
