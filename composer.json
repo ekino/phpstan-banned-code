@@ -34,10 +34,14 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-
     "extra": {
         "branch-alias": {
             "dev-master": "0.10-dev"
+        },
+        "phpstan": {
+            "includes": [
+                "extension.neon"
+            ]
         }
     }
 }
