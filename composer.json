@@ -2,7 +2,10 @@
     "name": "ekino/phpstan-banned-code",
     "type": "phpstan-extension",
     "description": "Detected banned code using PHPStan",
-    "keywords": ["PHPStan", "Code Quality"],
+    "keywords": [
+        "PHPStan",
+        "Code Quality"
+    ],
     "homepage": "https://github.com/ekino/phpstan-banned-code",
     "license": "MIT",
     "authors": [
@@ -13,14 +16,25 @@
         }
     ],
     "require": {
-        "php":             "^7.1",
+        "php": "^7.1",
         "phpstan/phpstan": "^0.11"
     },
     "require-dev": {
-        "phpstan/phpstan-phpunit":     "^0.11",
-        "phpunit/phpunit":             "^7.2",
-        "friendsofphp/php-cs-fixer":   "^2.12",
+        "friendsofphp/php-cs-fixer": "^2.12",
+        "localheinz/composer-normalize": "^1.3",
+        "phpstan/phpstan-phpunit": "^0.11",
+        "phpunit/phpunit": "^7.2",
         "sensiolabs/security-checker": "^5.0"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.10-dev"
+        },
+        "phpstan": {
+            "includes": [
+                "extension.neon"
+            ]
+        }
     },
     "autoload": {
         "psr-4": {
@@ -33,15 +47,5 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.10-dev"
-        },
-        "phpstan": {
-            "includes": [
-                "extension.neon"
-            ]
-        }
-    }
+    "prefer-stable": true
 }
