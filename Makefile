@@ -8,6 +8,7 @@ help:
 
 app-composer-validate: ## to validate composer config
 	composer validate
+	composer normalize --dry-run
 
 app-cs-check: ## to show files that need to be fixed
 	vendor/bin/php-cs-fixer fix --dry-run --diff --verbose

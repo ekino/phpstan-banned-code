@@ -16,7 +16,9 @@ To use this extension, require it using [Composer](https://getcomposer.org/):
 composer require --dev ekino/phpstan-banned-code
 ```
 
-And include extension.neon in your project's PHPStan config:
+When you use https://github.com/phpstan/extension-installer you are done.
+
+If not, include `extension.neon` in your project's PHPStan config:
 
 ```
 includes:
