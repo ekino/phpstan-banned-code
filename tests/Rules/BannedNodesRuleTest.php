@@ -22,6 +22,7 @@ use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Expr\Include_;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Name;
+use PhpParser\Node\Scalar\LNumber;
 use PHPStan\Analyser\Scope;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -93,6 +94,15 @@ class BannedNodesRuleTest extends TestCase
         }
 
         $node = new FuncCall(new Variable('myClosure'));
+
+        $this->assertCount(0, $this->rule->processNode($node, $this->scope));
+
+        $node = new FuncCall(
+            new Expr\ArrayDimFetch(
+                new Variable('myArray'),
+                LNumber::fromString('0', ['kind' => LNumber::KIND_DEC])
+            )
+        );
 
         $this->assertCount(0, $this->rule->processNode($node, $this->scope));
     }

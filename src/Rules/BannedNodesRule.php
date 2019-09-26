@@ -58,12 +58,8 @@ class BannedNodesRule implements Rule
         }
 
         if ($node instanceof FuncCall) {
-            if ($node->name instanceof Variable) {
-                return [];
-            }
-
             if (!$node->name instanceof Name) {
-                throw new \RuntimeException(sprintf('Expected instance of %s for $node->name, %s given', Name::class, \get_class($node->name)));
+                return [];
             }
 
             $function = $node->name->toString();
