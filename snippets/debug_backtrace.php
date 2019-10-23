@@ -1,0 +1,3 @@
+<?php
+
+debug_backtrace();

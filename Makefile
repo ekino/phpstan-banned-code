@@ -28,8 +28,18 @@ app-static-analysis: ## to run static analysis
 app-test: ## to run unit tests
 	vendor/bin/phpunit
 
+app-test-functional: ## test some code snippets are detected as banned code
+	@for filename in $$(find snippets -type f -name *.php); do \
+		if vendor/bin/phpstan analyze $$filename -l 7 | grep -q 'Should not use'; then \
+			echo "Code snippet $$filename was correctly detected as banned code."; \
+		else \
+			echo "Code snippet $$filename was NOT detected as banned code, but it SHOULD be."; \
+			exit 1; \
+		fi \
+	done \
+
 app-test-with-code-coverage: ## to run unit tests with code-coverage
 	vendor/bin/phpunit --coverage-text --colors=never
 
 ci: ## to run checks during ci
-	make app-composer-validate app-test-with-code-coverage app-static-analysis app-cs-check app-security-check
+	make app-composer-validate app-test-with-code-coverage app-test-functional app-static-analysis app-cs-check app-security-check
