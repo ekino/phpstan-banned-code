@@ -36,14 +36,17 @@ parameters:
 			# enable detection of echo
 			-
 				type: Stmt_Echo
+				functions: null
 
 			# enable detection of eval
 			-
 				type: Expr_Eval
+				functions: null
 
 			# enable detection of die/exit
 			-
 				type: Expr_Exit
+				functions: null
 
 			# enable detection of a set of functions
 			-
