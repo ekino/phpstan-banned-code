@@ -120,7 +120,7 @@ class BannedNodesRuleTest extends TestCase
     }
 
     /**
-     * @return \Generator
+     * @return \Generator<array<Include_>>
      */
     public function getUnhandledNodes(): \Generator
     {
@@ -128,7 +128,7 @@ class BannedNodesRuleTest extends TestCase
     }
 
     /**
-     * @return \Generator
+     * @return \Generator<array<Eval_|Exit_>>
      */
     public function getHandledNodes(): \Generator
     {

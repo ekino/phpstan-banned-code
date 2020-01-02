@@ -8,6 +8,7 @@ php:
   - '7.1'
   - '7.2'
   - '7.3'
+  - '7.4'
 
 env:
   global:
@@ -19,8 +20,6 @@ sudo: false
 cache:
   directories:
     - $HOME/.composer/cache/files
-
-before_install: composer self-update
 
 before_install:
   - composer self-update
@@ -34,4 +33,3 @@ script:
 
 after_success:
   - if [ -x .travis/after_success_${TARGET}.sh ]; then .travis/after_success_${TARGET}.sh; fi;
-
