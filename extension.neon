@@ -45,11 +45,15 @@ parameters:
 
 services:
 	-
-		class: Ekino\PHPStanBannedCode\Rules\BannedNodesRule(%banned_code.nodes%)
+		class: Ekino\PHPStanBannedCode\Rules\BannedNodesRule
 		tags:
 			- phpstan.rules.rule
+		arguments:
+			- '%banned_code.nodes%'
 
 	-
-		class: Ekino\PHPStanBannedCode\Rules\BannedUseTestRule(%banned_code.use_from_tests%)
+		class: Ekino\PHPStanBannedCode\Rules\BannedUseTestRule
 		tags:
 			- phpstan.rules.rule
+		arguments:
+			- '%banned_code.use_from_tests%'
