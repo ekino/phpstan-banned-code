@@ -4,7 +4,7 @@ CHANGELOG
 master
 ------
 
-* todo...
+* Fix tests by adding nikic/php-parser as a required dev dependency
 
 v0.3.0
 ------
