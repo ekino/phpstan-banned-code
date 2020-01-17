@@ -4,6 +4,7 @@ CHANGELOG
 master
 ------
 
+* Fix deprecated config inside extension.neon file
 * Fix tests by adding nikic/php-parser as a required dev dependency
 
 v0.3.0
