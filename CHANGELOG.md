@@ -4,7 +4,7 @@ CHANGELOG
 master
 ------
 
-* todo...
+* Drop support for PHP 7.1
 
 v0.3.1
 ------

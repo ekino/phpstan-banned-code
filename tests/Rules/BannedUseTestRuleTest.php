@@ -76,11 +76,10 @@ class BannedUseTestRuleTest extends TestCase
 
     /**
      * Asserts processNode throws an exception with invalid argument.
-     *
-     * @expectedException \InvalidArgumentException
      */
     public function testProcessNodeThrowsException(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $this->scope->expects($this->once())->method('getNamespace')->willReturn('Foo\\Bar');
 
         $this->rule->processNode($this->createMock(Node::class), $this->scope);
