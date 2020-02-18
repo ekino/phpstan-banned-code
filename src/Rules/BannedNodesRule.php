@@ -85,7 +85,7 @@ class BannedNodesRule implements Rule
      *
      * php-parser makes the same normalization.
      *
-     * @param  array<string>  $bannedNodes
+     * @param  array<array<string, string[]>>  $bannedNodes
      * @return array<string>
      */
     protected function normalizeFunctionNames(array $bannedNodes): array
