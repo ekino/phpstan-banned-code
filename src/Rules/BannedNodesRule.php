@@ -40,7 +40,7 @@ class BannedNodesRule implements Rule
      */
     public function __construct(array $bannedNodes)
     {
-        $this->bannedNodes = array_column($bannedNodes, null, 'type');
+        $this->bannedNodes     = array_column($bannedNodes, null, 'type');
         $this->bannedFunctions = $this->normalizeFunctionNames($this->bannedNodes);
     }
 

@@ -59,7 +59,7 @@ class BannedNodesRuleTest extends TestCase
                 'type' => 'Expr_Exit'
             ],
             [
-                'type' => 'Expr_FuncCall',
+                'type'      => 'Expr_FuncCall',
                 'functions' => [
                     'root',
                     'Safe\namespaced',
@@ -93,7 +93,7 @@ class BannedNodesRuleTest extends TestCase
     {
         $ruleWithoutLeadingSlashes = new BannedNodesRule([
             [
-                'type' => 'Expr_FuncCall',
+                'type'      => 'Expr_FuncCall',
                 'functions' => [
                     'root',
                     'Safe\namespaced',
@@ -103,7 +103,7 @@ class BannedNodesRuleTest extends TestCase
 
         $ruleWithLeadingSlashes = new BannedNodesRule([
             [
-                'type' => 'Expr_FuncCall',
+                'type'      => 'Expr_FuncCall',
                 'functions' => [
                     '\root',
                     '\Safe\namespaced',
