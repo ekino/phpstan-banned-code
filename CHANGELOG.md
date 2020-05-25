@@ -5,6 +5,7 @@ master
 ------
 
 * Drop support for PHP 7.1
+* Added support of dd function
 
 v0.3.1
 ------
