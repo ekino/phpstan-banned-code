@@ -20,8 +20,8 @@
         "phpstan/phpstan": "^0.12"
     },
     "require-dev": {
+        "ergebnis/composer-normalize": "^2.6",
         "friendsofphp/php-cs-fixer": "^2.12",
-        "localheinz/composer-normalize": "^2.3",
         "nikic/php-parser": "^4.3",
         "phpstan/phpstan-phpunit": "^0.12",
         "phpunit/phpunit": "^8.5",
