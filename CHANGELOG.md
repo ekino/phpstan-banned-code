@@ -6,6 +6,7 @@ master
 
 * Drop support for PHP 7.1
 * Added support of dd function
+* Replaced deprecated localheinz/composer-normalize in favor of ergebnis one
 
 v0.3.1
 ------
