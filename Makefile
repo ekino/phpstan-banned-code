@@ -42,4 +42,4 @@ app-test-with-code-coverage: ## to run unit tests with code-coverage
 	vendor/bin/phpunit --coverage-text --colors=never
 
 ci: ## to run checks during ci
-	make app-composer-validate app-test-with-code-coverage app-test-functional app-static-analysis app-cs-check app-security-check
+	make app-composer-validate app-test-with-code-coverage app-test-functional app-static-analysis app-security-check
