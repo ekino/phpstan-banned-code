@@ -14,7 +14,7 @@ env:
   global:
     - TARGET=ci
 
-dist: trusty
+dist: xenial
 sudo: false
 
 cache:
