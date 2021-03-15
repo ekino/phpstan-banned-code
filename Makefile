@@ -20,7 +20,10 @@ app-install: ## to install app
 	composer install --prefer-dist
 
 app-security-check: ## to check if any security issues in the PHP dependencies
-	vendor/bin/security-checker security:check
+	rm -f local-php-security-checker
+	curl -sSL https://github.com/fabpot/local-php-security-checker/releases/download/v1.0.0/local-php-security-checker_1.0.0_linux_amd64 -o local-php-security-checker
+	chmod a+x local-php-security-checker
+	./local-php-security-checker
 
 app-static-analysis: ## to run static analysis
 	php -dmemory_limit=-1 vendor/bin/phpstan analyze src tests -l 7
