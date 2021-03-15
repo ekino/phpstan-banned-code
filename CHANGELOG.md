@@ -13,6 +13,7 @@ v0.4.0
 * Added support of dd function
 * Replaced deprecated localheinz/composer-normalize in favor of ergebnis one
 * Allow PHP ^8.0
+* Switch to the new security checker
 
 v0.3.1
 ------
