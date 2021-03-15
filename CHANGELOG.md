@@ -4,9 +4,15 @@ CHANGELOG
 master
 ------
 
+* todo
+
+v0.4.0
+------
+
 * Drop support for PHP 7.1
 * Added support of dd function
 * Replaced deprecated localheinz/composer-normalize in favor of ergebnis one
+* Allow PHP ^8.0
 
 v0.3.1
 ------
