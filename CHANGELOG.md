@@ -4,6 +4,12 @@ CHANGELOG
 master
 ------
 
+* todo...
+
+v0.5.0
+------
+
+* Migrate from Travis to GitHub Actions
 * Fix deprecated PHP-CS rules 
 
 v0.4.0
