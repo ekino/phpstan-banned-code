@@ -4,7 +4,7 @@ CHANGELOG
 master
 ------
 
-* todo
+* Fix deprecated PHP-CS rules 
 
 v0.4.0
 ------
