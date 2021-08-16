@@ -14,6 +14,7 @@ v0.4.0
 * Replaced deprecated localheinz/composer-normalize in favor of ergebnis one
 * Allow PHP ^8.0
 * Switch to the new security checker
+* Upgrade friendsofphp/php-cs-fixer
 
 v0.3.1
 ------
