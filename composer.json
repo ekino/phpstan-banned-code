@@ -17,14 +17,14 @@
     ],
     "require": {
         "php": "^7.2 || ^8.0",
-        "phpstan/phpstan": "^0.12"
+        "phpstan/phpstan": "^1.0"
     },
     "require-dev": {
         "ergebnis/composer-normalize": "^2.6",
         "friendsofphp/php-cs-fixer": "^3.0",
         "nikic/php-parser": "^4.3",
-        "phpstan/phpstan-phpunit": "^0.12",
-        "phpunit/phpunit": "^8.5",
+        "phpstan/phpstan-phpunit": "^1.0",
+        "phpunit/phpunit": "^9.5",
         "symfony/var-dumper": "^5.0"
     },
     "extra": {
