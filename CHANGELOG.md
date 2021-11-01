@@ -5,6 +5,8 @@ master
 ------
 
 * Improve PHPStan configuration file
+* Updated to PHPStan 1.0
+* Updated to PHPUnit 9.5
 
 v0.5.0
 ------
