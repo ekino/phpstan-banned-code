@@ -4,6 +4,11 @@ CHANGELOG
 master
 ------
 
+* todo...
+
+v1.0.0
+------
+
 * Improve PHPStan configuration file
 * Updated to PHPStan 1.0
 * Updated to PHPUnit 9.5
