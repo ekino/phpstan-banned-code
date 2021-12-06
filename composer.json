@@ -1,13 +1,12 @@
 {
     "name": "ekino/phpstan-banned-code",
-    "type": "phpstan-extension",
     "description": "Detected banned code using PHPStan",
+    "license": "MIT",
+    "type": "phpstan-extension",
     "keywords": [
         "PHPStan",
         "Code Quality"
     ],
-    "homepage": "https://github.com/ekino/phpstan-banned-code",
-    "license": "MIT",
     "authors": [
         {
             "name": "Rémi Marseille",
@@ -15,6 +14,7 @@
             "homepage": "https://www.ekino.com"
         }
     ],
+    "homepage": "https://github.com/ekino/phpstan-banned-code",
     "require": {
         "php": "^7.3 || ^8.0",
         "phpstan/phpstan": "^1.0"
@@ -27,16 +27,8 @@
         "phpunit/phpunit": "^9.5",
         "symfony/var-dumper": "^5.0"
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.0-dev"
-        },
-        "phpstan": {
-            "includes": [
-                "extension.neon"
-            ]
-        }
-    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Ekino\\PHPStanBannedCode\\": "src"
@@ -47,6 +39,14 @@
             "Tests\\Ekino\\PHPStanBannedCode\\": "tests"
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        },
+        "phpstan": {
+            "includes": [
+                "extension.neon"
+            ]
+        }
+    }
 }
