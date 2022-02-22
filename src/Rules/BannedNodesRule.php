@@ -26,12 +26,12 @@ use PHPStan\Rules\Rule;
 class BannedNodesRule implements Rule
 {
     /**
-     * @var array<array<string, string[]>>
+     * @var array<mixed>
      */
     private $bannedNodes;
 
     /**
-     * @param array<array<string, string|string[]>> $bannedNodes
+     * @param array<mixed> $bannedNodes
      */
     public function __construct(array $bannedNodes)
     {
