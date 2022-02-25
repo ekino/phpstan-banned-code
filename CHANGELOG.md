@@ -4,7 +4,7 @@ CHANGELOG
 master
 ------
 
-* todo...
+* Added rule to ban shell execution via backticks
 
 v1.0.0
 ------
