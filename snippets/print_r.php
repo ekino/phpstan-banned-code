@@ -1,3 +1,3 @@
 <?php
 
-print_r('');
+print_r('test print_r');

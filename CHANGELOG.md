@@ -5,6 +5,7 @@ master
 ------
 
 * Added rule to ban shell execution via backticks
+* Added rule to ban print statements
 
 v1.0.0
 ------
