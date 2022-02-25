@@ -41,6 +41,11 @@ parameters:
 					- system
 					- var_dump
 
+			# enable detection of shell execution by backticks
+			-
+				type: Expr_ShellExec
+				functions: null
+
 		# enable detection of `use Tests\Foo\Bar` in a non-test file
 		use_from_tests: true
 
