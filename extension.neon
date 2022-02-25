@@ -41,6 +41,11 @@ parameters:
 					- system
 					- var_dump
 
+			# enable detection of print statements
+			-
+				type: Expr_Print
+				functions: null
+
 			# enable detection of shell execution by backticks
 			-
 				type: Expr_ShellExec

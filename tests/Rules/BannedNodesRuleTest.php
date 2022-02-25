@@ -20,6 +20,7 @@ use PhpParser\Node\Expr\Eval_;
 use PhpParser\Node\Expr\Exit_;
 use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Expr\Include_;
+use PhpParser\Node\Expr\Print_;
 use PhpParser\Node\Expr\ShellExec;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Name;
@@ -53,6 +54,7 @@ class BannedNodesRuleTest extends TestCase
             ['type' => 'Expr_Eval'],
             ['type' => 'Expr_Exit'],
             ['type' => 'Expr_FuncCall', 'functions' => ['debug_backtrace', 'dump']],
+            ['type' => 'Expr_Print'],
             ['type' => 'Expr_ShellExec'],
         ]);
         $this->scope = $this->createMock(Scope::class);
@@ -136,6 +138,7 @@ class BannedNodesRuleTest extends TestCase
     {
         yield [new Eval_($this->createMock(Expr::class))];
         yield [new Exit_()];
+        yield [new Print_($this->createMock(Expr::class))];
         yield [new ShellExec([''])];
     }
 }
