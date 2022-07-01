@@ -39,6 +39,11 @@
             "Tests\\Ekino\\PHPStanBannedCode\\": "tests"
         }
     },
+    "config": {
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true
+        }
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "1.0-dev"
