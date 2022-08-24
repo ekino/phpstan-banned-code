@@ -7,6 +7,7 @@ master
 * Added rule to ban shell execution via backticks
 * Added rule to ban print statements
 * Allow Composer plugin ergebnis/composer-normalize
+* Add Composer keyword for asking user to add this package to require-dev instead of require
 
 v1.0.0
 ------

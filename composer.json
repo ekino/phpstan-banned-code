@@ -5,7 +5,8 @@
     "type": "phpstan-extension",
     "keywords": [
         "PHPStan",
-        "Code Quality"
+        "Code Quality",
+        "static analysis"
     ],
     "authors": [
         {
