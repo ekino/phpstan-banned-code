@@ -26,7 +26,7 @@ use PHPStan\Rules\Rule;
 class BannedNodesRule implements Rule
 {
     /**
-     * @var array<mixed>
+     * @var array<string, mixed>
      */
     private $bannedNodes;
 
@@ -36,7 +36,7 @@ class BannedNodesRule implements Rule
     private $bannedFunctions;
 
     /**
-     * @param array<array<string, string|string[]>> $bannedNodes
+     * @param array<array{type: string, functions?: array<string>}> $bannedNodes
      */
     public function __construct(array $bannedNodes)
     {
@@ -85,20 +85,16 @@ class BannedNodesRule implements Rule
      *
      * php-parser makes the same normalization.
      *
-     * @param  array<array<string, string[]>>  $bannedNodes
+     * @param  array<string, mixed>  $bannedNodes
      * @return array<string>
      */
     protected function normalizeFunctionNames(array $bannedNodes): array
     {
-        if(! isset($bannedNodes['Expr_FuncCall']['functions'])) {
-            return [];
-        }
-
         return array_map(
             static function (string $function): string {
                 return ltrim($function, '\\');
             },
-            $bannedNodes['Expr_FuncCall']['functions']
+            $bannedNodes['Expr_FuncCall']['functions'] ?? []
         );
     }
 }
