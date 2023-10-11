@@ -24,6 +24,7 @@ use PhpParser\Node\Expr\Print_;
 use PhpParser\Node\Expr\ShellExec;
 use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Name;
+use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Scalar\LNumber;
 use PHPStan\Analyser\Scope;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -53,7 +54,7 @@ class BannedNodesRuleTest extends TestCase
             ['type' => 'Stmt_Echo'],
             ['type' => 'Expr_Eval'],
             ['type' => 'Expr_Exit'],
-            ['type' => 'Expr_FuncCall', 'functions' => ['debug_backtrace', 'dump']],
+            ['type' => 'Expr_FuncCall', 'functions' => ['debug_backtrace', 'dump', 'Safe\namespaced']],
             ['type' => 'Expr_Print'],
             ['type' => 'Expr_ShellExec'],
         ]);
@@ -80,27 +81,65 @@ class BannedNodesRuleTest extends TestCase
         $this->assertCount(0, $this->rule->processNode($node, $this->scope));
     }
 
-    /**
-     * Tests processNode with banned/allowed functions.
-     */
-    public function testProcessNodeWithFunctions(): void
+    public function testProcessNodeWithBannedFunctions(): void
     {
-        foreach (['debug_backtrace', 'dump'] as $bannedFunction) {
-            $node = new FuncCall(new Name($bannedFunction));
+        $ruleWithoutLeadingSlashes = new BannedNodesRule([
+            [
+                'type'      => 'Expr_FuncCall',
+                'functions' => [
+                    'root',
+                    'Safe\namespaced',
+                ]
+            ],
+        ]);
 
-            $this->assertCount(1, $this->rule->processNode($node, $this->scope));
-        }
+        $ruleWithLeadingSlashes = new BannedNodesRule([
+            [
+                'type'      => 'Expr_FuncCall',
+                'functions' => [
+                    '\root',
+                    '\Safe\namespaced',
+                ]
+            ],
+        ]);
 
-        foreach (['array_search', 'sprintf'] as $allowedFunction) {
-            $node = new FuncCall(new Name($allowedFunction));
+        $rootFunction = new FuncCall(new Name('root'));
+        $this->assertNodeTriggersError($ruleWithoutLeadingSlashes, $rootFunction);
+        $this->assertNodeTriggersError($ruleWithLeadingSlashes, $rootFunction);
 
-            $this->assertCount(0, $this->rule->processNode($node, $this->scope));
-        }
+        $namespacedFunction = new FuncCall(new FullyQualified('Safe\namespaced'));
+        $this->assertNodeTriggersError($ruleWithoutLeadingSlashes, $namespacedFunction);
+        $this->assertNodeTriggersError($ruleWithLeadingSlashes, $namespacedFunction);
+    }
 
+    protected function assertNodeTriggersError(BannedNodesRule $rule, Node $node): void
+    {
+        $this->assertCount(1, $rule->processNode($node, $this->scope));
+    }
+
+    protected function assertNodePasses(BannedNodesRule $rule, Node $node): void
+    {
+        $this->assertCount(0, $rule->processNode($node, $this->scope));
+    }
+
+    public function testProcessNodeWithAllowedFunctions(): void
+    {
+        $rootFunction = new FuncCall(new Name('allowed'));
+        $this->assertNodePasses($this->rule, $rootFunction);
+
+        $namespacedFunction = new FuncCall(new FullyQualified('Safe\allowed'));
+        $this->assertNodePasses($this->rule, $namespacedFunction);
+    }
+
+    public function testProcessNodeWithFunctionInClosure(): void
+    {
         $node = new FuncCall(new Variable('myClosure'));
 
-        $this->assertCount(0, $this->rule->processNode($node, $this->scope));
+        $this->assertNodePasses($this->rule, $node);
+    }
 
+    public function testProcessNodeWithArrayDimFetch(): void
+    {
         $node = new FuncCall(
             new Expr\ArrayDimFetch(
                 new Variable('myArray'),
@@ -108,7 +147,7 @@ class BannedNodesRuleTest extends TestCase
             )
         );
 
-        $this->assertCount(0, $this->rule->processNode($node, $this->scope));
+        $this->assertNodePasses($this->rule, $node);
     }
 
     /**
@@ -120,7 +159,7 @@ class BannedNodesRuleTest extends TestCase
      */
     public function testProcessNodeWithHandledTypes(Expr $node): void
     {
-        $this->assertCount(1, $this->rule->processNode($node, $this->scope));
+        $this->assertNodeTriggersError($this->rule, $node);
     }
 
     /**

@@ -26,16 +26,22 @@ use PHPStan\Rules\Rule;
 class BannedNodesRule implements Rule
 {
     /**
-     * @var array<mixed>
+     * @var array<string, mixed>
      */
     private $bannedNodes;
 
     /**
-     * @param array<mixed> $bannedNodes
+     * @var array<string>
+     */
+    private $bannedFunctions;
+
+    /**
+     * @param array<array{type: string, functions?: array<string>}> $bannedNodes
      */
     public function __construct(array $bannedNodes)
     {
-        $this->bannedNodes = array_column($bannedNodes, null, 'type');
+        $this->bannedNodes     = array_column($bannedNodes, null, 'type');
+        $this->bannedFunctions = $this->normalizeFunctionNames($this->bannedNodes);
     }
 
     /**
@@ -64,7 +70,7 @@ class BannedNodesRule implements Rule
 
             $function = $node->name->toString();
 
-            if (\in_array($function, $this->bannedNodes[$type]['functions'])) {
+            if (\in_array($function, $this->bannedFunctions)) {
                 return [sprintf('Should not use function "%s", please change the code.', $function)];
             }
 
@@ -72,5 +78,23 @@ class BannedNodesRule implements Rule
         }
 
         return [sprintf('Should not use node with type "%s", please change the code.', $type)];
+    }
+
+    /**
+     * Strip leading slashes from function names.
+     *
+     * php-parser makes the same normalization.
+     *
+     * @param  array<string, mixed>  $bannedNodes
+     * @return array<string>
+     */
+    protected function normalizeFunctionNames(array $bannedNodes): array
+    {
+        return array_map(
+            static function (string $function): string {
+                return ltrim($function, '\\');
+            },
+            $bannedNodes['Expr_FuncCall']['functions'] ?? []
+        );
     }
 }
