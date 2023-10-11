@@ -5,7 +5,7 @@
 [![Coverage Status](https://coveralls.io/repos/ekino/phpstan-banned-code/badge.svg?branch=master&service=github)](https://coveralls.io/github/ekino/phpstan-banned-code?branch=master)
 [![Total Downloads](https://poser.pugx.org/ekino/phpstan-banned-code/downloads)](https://packagist.org/packages/ekino/phpstan-banned-code)
 
-This library is based on [PHPStan](https://github.com/phpstan/phpstan) to detect calls to specific functions you don't want in your project.
+This library is based on [PHPStan](https://phpstan.org/) to detect calls to specific functions you don't want in your project.
 For instance, you can add it in your CI process to make sure there is no debug/non standard code (like [var_dump](https://www.php.net/manual/en/function.var-dump.php), [exit](https://www.php.net/manual/en/function.exit.php), ...).
 
 ## Basic usage
@@ -52,6 +52,7 @@ parameters:
 			-
 				type: Expr_FuncCall
 				functions:
+					- dd
 					- debug_backtrace
 					- dump
 					- exec
@@ -62,6 +63,16 @@ parameters:
 					- shell_exec
 					- system
 					- var_dump
+
+			# enable detection of print statements
+			-
+				type: Expr_Print
+				functions: null
+
+			# enable detection of shell execution by backticks
+			-
+				type: Expr_ShellExec
+				functions: null
 
 		# enable detection of `use Tests\Foo\Bar` in a non-test file
 		use_from_tests: true

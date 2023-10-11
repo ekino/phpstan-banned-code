@@ -26,7 +26,7 @@ use PHPStan\Rules\Rule;
 class BannedNodesRule implements Rule
 {
     /**
-     * @var array<array<string, string[]>>
+     * @var array<mixed>
      */
     private $bannedNodes;
 

@@ -29,6 +29,7 @@ parameters:
 			-
 				type: Expr_FuncCall
 				functions:
+					- dd
 					- debug_backtrace
 					- dump
 					- exec
@@ -39,6 +40,16 @@ parameters:
 					- shell_exec
 					- system
 					- var_dump
+
+			# enable detection of print statements
+			-
+				type: Expr_Print
+				functions: null
+
+			# enable detection of shell execution by backticks
+			-
+				type: Expr_ShellExec
+				functions: null
 
 		# enable detection of `use Tests\Foo\Bar` in a non-test file
 		use_from_tests: true

@@ -4,7 +4,34 @@ CHANGELOG
 master
 ------
 
+* Added rule to ban shell execution via backticks
+* Added rule to ban print statements
+* Allow Composer plugin ergebnis/composer-normalize
+* Add Composer keyword for asking user to add this package to require-dev instead of require
+
+v1.0.0
+------
+
+* Improve PHPStan configuration file
+* Updated to PHPStan 1.0
+* Updated to PHPUnit 9.5
+* Drop support for PHP 7.2
+
+v0.5.0
+------
+
+* Migrate from Travis to GitHub Actions
+* Fix deprecated PHP-CS rules 
+
+v0.4.0
+------
+
 * Drop support for PHP 7.1
+* Added support of dd function
+* Replaced deprecated localheinz/composer-normalize in favor of ergebnis one
+* Allow PHP ^8.0
+* Switch to the new security checker
+* Upgrade friendsofphp/php-cs-fixer
 
 v0.3.1
 ------

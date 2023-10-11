@@ -1,4 +1,3 @@
 <?php
 
-exec('');
-
+exec('ls -lsa');
