@@ -8,6 +8,7 @@ master
 * Added rule to ban print statements
 * Allow Composer plugin ergebnis/composer-normalize
 * Add Composer keyword for asking user to add this package to require-dev instead of require
+* Normalize leading backslashes in banned function names
 
 v1.0.0
 ------
