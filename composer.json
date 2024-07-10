@@ -23,7 +23,7 @@
     "require-dev": {
         "ergebnis/composer-normalize": "^2.6",
         "friendsofphp/php-cs-fixer": "^3.0",
-        "nikic/php-parser": "^4.3",
+        "nikic/php-parser": "^5.1",
         "phpstan/phpstan-phpunit": "^1.0",
         "phpunit/phpunit": "^9.5",
         "symfony/var-dumper": "^5.0"
