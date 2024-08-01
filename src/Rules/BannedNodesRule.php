@@ -71,13 +71,13 @@ class BannedNodesRule implements Rule
             $function = $node->name->toString();
 
             if (\in_array($function, $this->bannedFunctions)) {
-                return [sprintf('Should not use function "%s", please change the code.', $function)];
+                return [\sprintf('Should not use function "%s", please change the code.', $function)];
             }
 
             return [];
         }
 
-        return [sprintf('Should not use node with type "%s", please change the code.', $type)];
+        return [\sprintf('Should not use node with type "%s", please change the code.', $type)];
     }
 
     /**

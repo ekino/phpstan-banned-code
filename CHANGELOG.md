@@ -4,6 +4,13 @@ CHANGELOG
 master
 ------
 
+* todo...
+
+v2.0.0
+------
+
+* Drop support for PHP ^7.3 || ^8.0, support now only ^8.1
+* Force usage of native sprintf function
 * Added rule to ban shell execution via backticks
 * Added rule to ban print statements
 * Allow Composer plugin ergebnis/composer-normalize
