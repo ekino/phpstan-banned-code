@@ -62,14 +62,14 @@ class BannedUseTestRule implements Rule
         }
 
         if (!$node instanceof Use_) {
-            throw new \InvalidArgumentException(sprintf('$node must be an instance of %s, %s given', Use_::class, \get_class($node)));
+            throw new \InvalidArgumentException(\sprintf('$node must be an instance of %s, %s given', Use_::class, \get_class($node)));
         }
 
         $errors = [];
 
         foreach ($node->uses as $use) {
             if (preg_match('#^Tests#', $use->name->toString())) {
-                $errors[] = sprintf('Should not use %s in the non-test file %s', $use->name->toString(), $scope->getFile());
+                $errors[] = \sprintf('Should not use %s in the non-test file %s', $use->name->toString(), $scope->getFile());
             }
         }
 
