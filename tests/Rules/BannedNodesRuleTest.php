@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Tests\Ekino\PHPStanBannedCode\Rules;
 
+use Ekino\PHPStanBannedCode\Rules\BannedNodesErrorBuilder;
 use Ekino\PHPStanBannedCode\Rules\BannedNodesRule;
 use PhpParser\Node;
 use PhpParser\Node\Expr;
@@ -27,6 +28,9 @@ use PhpParser\Node\Name;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Scalar\LNumber;
 use PHPStan\Analyser\Scope;
+use PHPStan\Rules\IdentifierRuleError;
+use PHPStan\Rules\NonIgnorableRuleError;
+use PHPStan\Rules\RuleError;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -50,14 +54,17 @@ class BannedNodesRuleTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->rule  = new BannedNodesRule([
-            ['type' => 'Stmt_Echo'],
-            ['type' => 'Expr_Eval'],
-            ['type' => 'Expr_Exit'],
-            ['type' => 'Expr_FuncCall', 'functions' => ['debug_backtrace', 'dump', 'Safe\namespaced']],
-            ['type' => 'Expr_Print'],
-            ['type' => 'Expr_ShellExec'],
-        ]);
+        $this->rule  = new BannedNodesRule(
+            [
+                ['type' => 'Stmt_Echo'],
+                ['type' => 'Expr_Eval'],
+                ['type' => 'Expr_Exit'],
+                ['type' => 'Expr_FuncCall', 'functions' => ['debug_backtrace', 'dump', 'Safe\namespaced']],
+                ['type' => 'Expr_Print'],
+                ['type' => 'Expr_ShellExec'],
+            ],
+            new BannedNodesErrorBuilder(true)
+        );
         $this->scope = $this->createMock(Scope::class);
     }
 
@@ -83,25 +90,31 @@ class BannedNodesRuleTest extends TestCase
 
     public function testProcessNodeWithBannedFunctions(): void
     {
-        $ruleWithoutLeadingSlashes = new BannedNodesRule([
+        $ruleWithoutLeadingSlashes = new BannedNodesRule(
             [
-                'type'      => 'Expr_FuncCall',
-                'functions' => [
-                    'root',
-                    'Safe\namespaced',
-                ]
+                [
+                    'type'      => 'Expr_FuncCall',
+                    'functions' => [
+                        'root',
+                        'Safe\namespaced',
+                    ]
+                ],
             ],
-        ]);
+            new BannedNodesErrorBuilder(true)
+        );
 
-        $ruleWithLeadingSlashes = new BannedNodesRule([
+        $ruleWithLeadingSlashes = new BannedNodesRule(
             [
-                'type'      => 'Expr_FuncCall',
-                'functions' => [
-                    '\root',
-                    '\Safe\namespaced',
-                ]
+                [
+                    'type'      => 'Expr_FuncCall',
+                    'functions' => [
+                        '\root',
+                        '\Safe\namespaced',
+                    ]
+                ],
             ],
-        ]);
+            new BannedNodesErrorBuilder(true)
+        );
 
         $rootFunction = new FuncCall(new Name('root'));
         $this->assertNodeTriggersError($ruleWithoutLeadingSlashes, $rootFunction);
@@ -114,7 +127,13 @@ class BannedNodesRuleTest extends TestCase
 
     protected function assertNodeTriggersError(BannedNodesRule $rule, Node $node): void
     {
-        $this->assertCount(1, $rule->processNode($node, $this->scope));
+        $errors = $rule->processNode($node, $this->scope);
+        $this->assertCount(1, $errors);
+        $error = $errors[0];
+        $this->assertInstanceOf(RuleError::class, $error);
+        $this->assertInstanceOf(IdentifierRuleError::class, $error);
+        $this->assertStringStartsWith('ekinoBannedCode.', $error->getIdentifier());
+        $this->assertInstanceOf(NonIgnorableRuleError::class, $error);
     }
 
     protected function assertNodePasses(BannedNodesRule $rule, Node $node): void

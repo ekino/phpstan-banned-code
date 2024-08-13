@@ -76,6 +76,9 @@ parameters:
 
 		# enable detection of `use Tests\Foo\Bar` in a non-test file
 		use_from_tests: true
+
+		# errors emitted by the extension are non-ignorable by default, so they cannot accidentally be put into the baseline.
+		non_ignorable: false # default is true
 ```
 
 `type` is the returned value of a node, see the method `getType()`.
