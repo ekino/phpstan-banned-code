@@ -15,7 +15,6 @@ namespace Ekino\PHPStanBannedCode\Rules;
 
 use PhpParser\Node;
 use PhpParser\Node\Expr\FuncCall;
-use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Name;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
@@ -28,18 +27,20 @@ class BannedNodesRule implements Rule
     /**
      * @var array<string, mixed>
      */
-    private $bannedNodes;
+    private array $bannedNodes;
 
     /**
      * @var array<string>
      */
-    private $bannedFunctions;
+    private array $bannedFunctions;
 
     /**
      * @param array<array{type: string, functions?: array<string>}> $bannedNodes
      */
-    public function __construct(array $bannedNodes)
-    {
+    public function __construct(
+        array $bannedNodes,
+        private readonly BannedNodesErrorBuilder $errorBuilder
+    ) {
         $this->bannedNodes     = array_column($bannedNodes, null, 'type');
         $this->bannedFunctions = $this->normalizeFunctionNames($this->bannedNodes);
     }
@@ -71,13 +72,19 @@ class BannedNodesRule implements Rule
             $function = $node->name->toString();
 
             if (\in_array($function, $this->bannedFunctions)) {
-                return [\sprintf('Should not use function "%s", please change the code.', $function)];
+                return [$this->errorBuilder->buildError(
+                    \sprintf('Should not use function "%s", please change the code.', $function),
+                    'function',
+                )];
             }
 
             return [];
         }
 
-        return [\sprintf('Should not use node with type "%s", please change the code.', $type)];
+        return [$this->errorBuilder->buildError(
+            \sprintf('Should not use node with type "%s", please change the code.', $type),
+            'expression',
+        )];
     }
 
     /**

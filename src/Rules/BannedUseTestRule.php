@@ -23,17 +23,11 @@ use PHPStan\Rules\Rule;
  */
 class BannedUseTestRule implements Rule
 {
-    /**
-     * @var bool
-     */
-    private $enabled;
-
-    /**
-     * @param bool $enabled
-     */
-    public function __construct(bool $enabled = true)
+    public function __construct(
+        private readonly bool $enabled,
+        private readonly BannedNodesErrorBuilder $errorBuilder
+    )
     {
-        $this->enabled = $enabled;
     }
 
     /**
@@ -69,7 +63,10 @@ class BannedUseTestRule implements Rule
 
         foreach ($node->uses as $use) {
             if (preg_match('#^Tests#', $use->name->toString())) {
-                $errors[] = \sprintf('Should not use %s in the non-test file %s', $use->name->toString(), $scope->getFile());
+                $errors[] = $this->errorBuilder->buildError(
+                    \sprintf('Should not use %s in the non-test file %s', $use->name->toString(), $scope->getFile()),
+                    'test',
+                );
             }
         }
 

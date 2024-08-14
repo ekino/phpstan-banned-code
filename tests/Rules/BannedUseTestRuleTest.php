@@ -13,12 +13,16 @@ declare(strict_types=1);
 
 namespace Tests\Ekino\PHPStanBannedCode\Rules;
 
+use Ekino\PHPStanBannedCode\Rules\BannedNodesErrorBuilder;
 use Ekino\PHPStanBannedCode\Rules\BannedUseTestRule;
 use PhpParser\Node;
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\Node\Stmt\UseUse;
 use PHPStan\Analyser\Scope;
+use PHPStan\Rules\IdentifierRuleError;
+use PHPStan\Rules\NonIgnorableRuleError;
+use PHPStan\Rules\RuleError;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -42,7 +46,10 @@ class BannedUseTestRuleTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->rule  = new BannedUseTestRule();
+        $this->rule  = new BannedUseTestRule(
+            true,
+            new BannedNodesErrorBuilder(true)
+        );
         $this->scope = $this->createMock(Scope::class);
     }
 
@@ -60,8 +67,12 @@ class BannedUseTestRuleTest extends TestCase
     public function testProcessNodeIfDisabled(): void
     {
         $this->scope->expects($this->never())->method('getNamespace');
+        $testRule = new BannedUseTestRule(
+            false,
+            new BannedNodesErrorBuilder(true)
+        );
 
-        $this->assertCount(0, (new BannedUseTestRule(false))->processNode($this->createMock(Use_::class), $this->scope));
+        $this->assertCount(0, ($testRule)->processNode($this->createMock(Use_::class), $this->scope));
     }
 
     /**
@@ -97,6 +108,12 @@ class BannedUseTestRuleTest extends TestCase
             new UseUse(new Name('Tests\\Foo\\Bar')),
         ]);
 
-        $this->assertCount(1, $this->rule->processNode($node, $this->scope));
+        $errors = $this->rule->processNode($node, $this->scope);
+        $this->assertCount(1, $errors);
+        $error = $errors[0];
+        $this->assertInstanceOf(RuleError::class, $error);
+        $this->assertInstanceOf(IdentifierRuleError::class, $error);
+        $this->assertStringStartsWith('ekinoBannedCode.', $error->getIdentifier());
+        $this->assertInstanceOf(NonIgnorableRuleError::class, $error);
     }
 }

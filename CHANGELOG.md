@@ -6,6 +6,12 @@ master
 
 * todo...
 
+v2.1.0
+------
+
+* Added option to prevent errors to be ignored
+* Added error identifiers starting with `ekinoBannedCode.`
+
 v2.0.0
 ------
 

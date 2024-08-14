@@ -5,6 +5,7 @@ parametersSchema:
 			functions: schema(listOf(string()), nullable())
 		]))
 		use_from_tests: bool()
+		non_ignorable: bool()
 	])
 
 parameters:
@@ -54,6 +55,9 @@ parameters:
 		# enable detection of `use Tests\Foo\Bar` in a non-test file
 		use_from_tests: true
 
+		# when true, errors cannot be excluded
+		non_ignorable: true
+
 services:
 	-
 		class: Ekino\PHPStanBannedCode\Rules\BannedNodesRule
@@ -68,3 +72,8 @@ services:
 			- phpstan.rules.rule
 		arguments:
 			- '%banned_code.use_from_tests%'
+
+	-
+		class: Ekino\PHPStanBannedCode\Rules\BannedNodesErrorBuilder
+		arguments:
+			- '%banned_code.non_ignorable%'
