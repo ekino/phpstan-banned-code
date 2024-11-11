@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Ekino\PHPStanBannedCode\Rules;
 
-use PHPStan\Rules\RuleError;
+use PHPStan\Rules\IdentifierRuleError;
 use PHPStan\Rules\RuleErrorBuilder;
 
 /**
@@ -30,7 +30,7 @@ class BannedNodesErrorBuilder
     public function buildError(
         string $errorMessage,
         string $errorSuffix
-    ): RuleError {
+    ): IdentifierRuleError {
         $errBuilder = RuleErrorBuilder::message($errorMessage)
             ->identifier(\sprintf('%s.%s', self::ERROR_IDENTIFIER_PREFIX, $errorSuffix));
 

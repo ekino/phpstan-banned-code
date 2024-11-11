@@ -130,8 +130,6 @@ class BannedNodesRuleTest extends TestCase
         $errors = $rule->processNode($node, $this->scope);
         $this->assertCount(1, $errors);
         $error = $errors[0];
-        $this->assertInstanceOf(RuleError::class, $error);
-        $this->assertInstanceOf(IdentifierRuleError::class, $error);
         $this->assertStringStartsWith('ekinoBannedCode.', $error->getIdentifier());
         $this->assertInstanceOf(NonIgnorableRuleError::class, $error);
     }

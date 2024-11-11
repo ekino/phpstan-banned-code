@@ -4,7 +4,8 @@ parameters:
 		- src
 		- tests
 
-	checkGenericClassInNonGenericObjectType: false
+	ignoreErrors:
+		- identifier: missingType.generics
 
 includes:
 	- extension.neon
