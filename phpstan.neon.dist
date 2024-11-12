@@ -4,8 +4,6 @@ parameters:
 		- src
 		- tests
 
-	checkGenericClassInNonGenericObjectType: false
-
 includes:
 	- extension.neon
 	- vendor/phpstan/phpstan-phpunit/extension.neon

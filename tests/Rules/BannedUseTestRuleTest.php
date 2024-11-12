@@ -46,10 +46,7 @@ class BannedUseTestRuleTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->rule  = new BannedUseTestRule(
-            true,
-            new BannedNodesErrorBuilder(true)
-        );
+        $this->rule  = new BannedUseTestRule(true);
         $this->scope = $this->createMock(Scope::class);
     }
 
@@ -67,10 +64,7 @@ class BannedUseTestRuleTest extends TestCase
     public function testProcessNodeIfDisabled(): void
     {
         $this->scope->expects($this->never())->method('getNamespace');
-        $testRule = new BannedUseTestRule(
-            false,
-            new BannedNodesErrorBuilder(true)
-        );
+        $testRule = new BannedUseTestRule(false);
 
         $this->assertCount(0, ($testRule)->processNode($this->createMock(Use_::class), $this->scope));
     }
@@ -83,17 +77,6 @@ class BannedUseTestRuleTest extends TestCase
         $this->scope->expects($this->once())->method('getNamespace')->willReturn('Tests\\Foo\\Bar');
 
         $this->assertCount(0, $this->rule->processNode($this->createMock(Use_::class), $this->scope));
-    }
-
-    /**
-     * Asserts processNode throws an exception with invalid argument.
-     */
-    public function testProcessNodeThrowsException(): void
-    {
-        $this->expectException(\InvalidArgumentException::class);
-        $this->scope->expects($this->once())->method('getNamespace')->willReturn('Foo\\Bar');
-
-        $this->rule->processNode($this->createMock(Node::class), $this->scope);
     }
 
     /**
@@ -111,8 +94,6 @@ class BannedUseTestRuleTest extends TestCase
         $errors = $this->rule->processNode($node, $this->scope);
         $this->assertCount(1, $errors);
         $error = $errors[0];
-        $this->assertInstanceOf(RuleError::class, $error);
-        $this->assertInstanceOf(IdentifierRuleError::class, $error);
         $this->assertStringStartsWith('ekinoBannedCode.', $error->getIdentifier());
         $this->assertInstanceOf(NonIgnorableRuleError::class, $error);
     }

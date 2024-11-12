@@ -17,16 +17,18 @@ use PhpParser\Node;
 use PhpParser\Node\Stmt\Use_;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
+use PHPStan\Rules\RuleErrorBuilder;
 
 /**
  * @author Rémi Marseille <remi.marseille@ekino.com>
  */
+
+/**
+ * @implements Rule<Use_>
+ */
 class BannedUseTestRule implements Rule
 {
-    public function __construct(
-        private readonly bool $enabled,
-        private readonly BannedNodesErrorBuilder $errorBuilder
-    )
+    public function __construct(private readonly bool $enabled)
     {
     }
 
@@ -55,18 +57,16 @@ class BannedUseTestRule implements Rule
             return [];
         }
 
-        if (!$node instanceof Use_) {
-            throw new \InvalidArgumentException(\sprintf('$node must be an instance of %s, %s given', Use_::class, \get_class($node)));
-        }
-
         $errors = [];
 
         foreach ($node->uses as $use) {
             if (preg_match('#^Tests#', $use->name->toString())) {
-                $errors[] = $this->errorBuilder->buildError(
-                    \sprintf('Should not use %s in the non-test file %s', $use->name->toString(), $scope->getFile()),
-                    'test',
-                );
+                $errors[] = RuleErrorBuilder::message(
+                    \sprintf('Should not use %s in the non-test file %s', $use->name->toString(), $scope->getFile())
+                )
+                    ->nonIgnorable()
+                    ->identifier('ekinoBannedCode.use.forbidden')
+                    ->build();
             }
         }
 

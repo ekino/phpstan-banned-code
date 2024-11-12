@@ -18,9 +18,14 @@ use PhpParser\Node\Expr\FuncCall;
 use PhpParser\Node\Name;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
+use PHPStan\Rules\RuleErrorBuilder;
 
 /**
  * @author Rémi Marseille <remi.marseille@ekino.com>
+ */
+
+/**
+ * @implements Rule<Node>
  */
 class BannedNodesRule implements Rule
 {
@@ -37,10 +42,8 @@ class BannedNodesRule implements Rule
     /**
      * @param array<array{type: string, functions?: array<string>}> $bannedNodes
      */
-    public function __construct(
-        array $bannedNodes,
-        private readonly BannedNodesErrorBuilder $errorBuilder
-    ) {
+    public function __construct(array $bannedNodes)
+    {
         $this->bannedNodes     = array_column($bannedNodes, null, 'type');
         $this->bannedFunctions = $this->normalizeFunctionNames($this->bannedNodes);
     }
@@ -72,19 +75,27 @@ class BannedNodesRule implements Rule
             $function = $node->name->toString();
 
             if (\in_array($function, $this->bannedFunctions)) {
-                return [$this->errorBuilder->buildError(
-                    \sprintf('Should not use function "%s", please change the code.', $function),
-                    'function',
-                )];
+                return [
+                    RuleErrorBuilder::message(
+                        \sprintf('Should not use function "%s", please change the code.', $function)
+                    )
+                        ->nonIgnorable()
+                        ->identifier('ekinoBannedCode.function.forbidden')
+                        ->build()
+                ];
             }
 
             return [];
         }
 
-        return [$this->errorBuilder->buildError(
-            \sprintf('Should not use node with type "%s", please change the code.', $type),
-            'expression',
-        )];
+        return [
+            RuleErrorBuilder::message(
+                \sprintf('Should not use node with type "%s", please change the code.', $type)
+            )
+                ->nonIgnorable()
+                ->identifier('ekinoBannedCode.node.forbidden')
+                ->build()
+        ];
     }
 
     /**
@@ -92,7 +103,7 @@ class BannedNodesRule implements Rule
      *
      * php-parser makes the same normalization.
      *
-     * @param  array<string, mixed>  $bannedNodes
+     * @param array<string, mixed> $bannedNodes
      * @return array<string>
      */
     protected function normalizeFunctionNames(array $bannedNodes): array

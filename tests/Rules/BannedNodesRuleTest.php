@@ -62,8 +62,7 @@ class BannedNodesRuleTest extends TestCase
                 ['type' => 'Expr_FuncCall', 'functions' => ['debug_backtrace', 'dump', 'Safe\namespaced']],
                 ['type' => 'Expr_Print'],
                 ['type' => 'Expr_ShellExec'],
-            ],
-            new BannedNodesErrorBuilder(true)
+            ]
         );
         $this->scope = $this->createMock(Scope::class);
     }
@@ -99,8 +98,7 @@ class BannedNodesRuleTest extends TestCase
                         'Safe\namespaced',
                     ]
                 ],
-            ],
-            new BannedNodesErrorBuilder(true)
+            ]
         );
 
         $ruleWithLeadingSlashes = new BannedNodesRule(
@@ -112,8 +110,7 @@ class BannedNodesRuleTest extends TestCase
                         '\Safe\namespaced',
                     ]
                 ],
-            ],
-            new BannedNodesErrorBuilder(true)
+            ]
         );
 
         $rootFunction = new FuncCall(new Name('root'));
@@ -130,8 +127,6 @@ class BannedNodesRuleTest extends TestCase
         $errors = $rule->processNode($node, $this->scope);
         $this->assertCount(1, $errors);
         $error = $errors[0];
-        $this->assertInstanceOf(RuleError::class, $error);
-        $this->assertInstanceOf(IdentifierRuleError::class, $error);
         $this->assertStringStartsWith('ekinoBannedCode.', $error->getIdentifier());
         $this->assertInstanceOf(NonIgnorableRuleError::class, $error);
     }
@@ -197,6 +192,6 @@ class BannedNodesRuleTest extends TestCase
         yield [new Eval_($this->createMock(Expr::class))];
         yield [new Exit_()];
         yield [new Print_($this->createMock(Expr::class))];
-        yield [new ShellExec([''])];
+        yield [new ShellExec([$this->createMock(Expr::class)])];
     }
 }
