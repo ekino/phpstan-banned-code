@@ -4,7 +4,7 @@ CHANGELOG
 master
 ------
 
-* todo...
+* Updated to PHPStan 2.0
 
 v2.1.0
 ------
