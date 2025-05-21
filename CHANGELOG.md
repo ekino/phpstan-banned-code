@@ -9,6 +9,7 @@ master
 v3.1.0
 ------
 
+* Move code snippets into tests directory
 * Replace `fabpot/local-php-security-checker` by `composer audit` for the security check
 
 v3.0.0

@@ -29,7 +29,7 @@ app-test: ## to run unit tests
 	vendor/bin/phpunit
 
 app-test-functional: ## test some code snippets are detected as banned code
-	@for filename in $$(find snippets -type f -name *.php); do \
+	@for filename in $$(find tests/Functional/snippets -type f -name *.php); do \
 		if vendor/bin/phpstan analyze $$filename -l 7 | grep -q 'Should not use'; then \
 			echo "Code snippet $$filename was correctly detected as banned code."; \
 		else \

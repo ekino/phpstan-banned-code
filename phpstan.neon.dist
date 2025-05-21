@@ -2,7 +2,7 @@ parameters:
 	level: 8
 	paths:
 		- src
-		- tests
+		- tests/Unit
 
 	ignoreErrors:
 		- identifier: missingType.generics
