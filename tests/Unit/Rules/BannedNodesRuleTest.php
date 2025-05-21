@@ -27,6 +27,7 @@ use PhpParser\Node\Expr\Variable;
 use PhpParser\Node\Name;
 use PhpParser\Node\Name\FullyQualified;
 use PhpParser\Node\Scalar\LNumber;
+use PhpParser\Node\Scalar\String_;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\IdentifierRuleError;
 use PHPStan\Rules\NonIgnorableRuleError;
@@ -195,6 +196,6 @@ class BannedNodesRuleTest extends TestCase
         yield [new Eval_($this->createMock(Expr::class))];
         yield [new Exit_()];
         yield [new Print_($this->createMock(Expr::class))];
-        yield [new ShellExec([''])];
+        yield [new ShellExec([new String_('')])];
     }
 }
