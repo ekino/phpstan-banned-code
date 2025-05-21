@@ -5,6 +5,7 @@ master
 ------
 
 * todo...
+* Replace `fabpot/local-php-security-checker` by `composer audit` for the security check
 
 v3.0.0
 ------
