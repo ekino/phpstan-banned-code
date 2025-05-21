@@ -20,7 +20,7 @@ EOF;
 
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__)
-    ->exclude(['vendor', 'snippets'])
+    ->exclude(['vendor', 'tests/Functional/snippets'])
 ;
 
 $config = new PhpCsFixer\Config();
