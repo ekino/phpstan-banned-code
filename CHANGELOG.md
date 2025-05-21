@@ -9,6 +9,7 @@ master
 v3.1.0
 ------
 
+* Added PHP 8.4 to the CI run
 * Added empty() to the list of banned functions
 * Updated symfony/var-dumper to 6.4
 * Updated phpunit/phpunit to 10.5
