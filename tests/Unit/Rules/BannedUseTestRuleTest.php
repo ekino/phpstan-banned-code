@@ -31,15 +31,8 @@ use PHPUnit\Framework\TestCase;
  */
 class BannedUseTestRuleTest extends TestCase
 {
-    /**
-     * @var BannedUseTestRule
-     */
-    private $rule;
-
-    /**
-     * @var Scope|MockObject
-     */
-    private $scope;
+    private BannedUseTestRule $rule;
+    private Scope&MockObject $scope;
 
     /**
      * {@inheritdoc}
