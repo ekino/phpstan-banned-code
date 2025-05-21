@@ -9,6 +9,7 @@ master
 v3.1.0
 ------
 
+* Updated nikic/php-parser to 5.4
 * Move code snippets into tests directory
 * Replace `fabpot/local-php-security-checker` by `composer audit` for the security check
 
