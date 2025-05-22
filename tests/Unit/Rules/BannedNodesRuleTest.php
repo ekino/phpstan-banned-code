@@ -11,7 +11,7 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Tests\Ekino\PHPStanBannedCode\Rules;
+namespace Tests\Ekino\PHPStanBannedCode\Unit\Rules;
 
 use Ekino\PHPStanBannedCode\Rules\BannedNodesErrorBuilder;
 use Ekino\PHPStanBannedCode\Rules\BannedNodesRule;

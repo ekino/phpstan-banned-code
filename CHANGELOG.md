@@ -5,9 +5,10 @@ master
 ------
 
 * todo...
-* Replace `fabpot/local-php-security-checker` by `composer audit` for the security check
 
-v3.0.0
+* Replace `fabpot/local-php-security-checker` by `composer audit` for the security check
+* Move code snippets into tests directory
+
 ------
 
 * Updated to PHPStan 2.0
