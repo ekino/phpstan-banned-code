@@ -11,6 +11,7 @@ master
 * Updated nikic/php-parser to 5.4
 * Updated phpunit/phpunit to 10.5
 * Updated symfony/var-dumper to 6.4
+* Added empty() to the list of banned functions
 
 v3.0.0
 ------
