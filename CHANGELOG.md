@@ -9,7 +9,9 @@ master
 * Replace `fabpot/local-php-security-checker` by `composer audit` for the security check
 * Move code snippets into tests directory
 * Updated nikic/php-parser to 5.4
+* Updated phpunit/phpunit to 10.5
 
+v3.0.0
 ------
 
 * Updated to PHPStan 2.0

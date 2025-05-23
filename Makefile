@@ -26,7 +26,7 @@ app-static-analysis: ## to run static analysis
 	vendor/bin/phpstan analyze --memory-limit=-1
 
 app-test: ## to run unit tests
-	vendor/bin/phpunit
+	vendor/bin/phpunit --no-coverage
 
 app-test-functional: ## test some code snippets are detected as banned code
 	@for filename in $$(find tests/Functional/snippets -type f -name *.php); do \
@@ -39,6 +39,7 @@ app-test-functional: ## test some code snippets are detected as banned code
 	done \
 
 app-test-with-code-coverage: ## to run unit tests with code-coverage
+	@php -m | grep -qE 'xdebug|pcov' || (echo "Please install Xdebug or PCOV to enable code coverage." && exit 1)
 	vendor/bin/phpunit --coverage-text --colors=never
 
 ci: ## to run checks during ci

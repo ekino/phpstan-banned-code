@@ -32,6 +32,7 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Rules\IdentifierRuleError;
 use PHPStan\Rules\NonIgnorableRuleError;
 use PHPStan\Rules\RuleError;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -40,15 +41,9 @@ use PHPUnit\Framework\TestCase;
  */
 class BannedNodesRuleTest extends TestCase
 {
-    /**
-     * @var BannedNodesRule
-     */
-    private $rule;
-
-    /**
-     * @var Scope|MockObject
-     */
-    private $scope;
+    private BannedNodesRule $rule;
+    
+    private Scope&MockObject $scope;
 
     /**
      * {@inheritdoc}
@@ -75,18 +70,6 @@ class BannedNodesRuleTest extends TestCase
     public function testGetNodeType(): void
     {
         $this->assertSame(Node::class, $this->rule->getNodeType());
-    }
-
-    /**
-     * Tests processNode with unhandled nodes.
-     *
-     * @param Expr $node
-     *
-     * @dataProvider getUnhandledNodes
-     */
-    public function testProcessNodeWithUnhandledType(Expr $node): void
-    {
-        $this->assertCount(0, $this->rule->processNode($node, $this->scope));
     }
 
     public function testProcessNodeWithBannedFunctions(): void
@@ -126,20 +109,6 @@ class BannedNodesRuleTest extends TestCase
         $this->assertNodeTriggersError($ruleWithLeadingSlashes, $namespacedFunction);
     }
 
-    protected function assertNodeTriggersError(BannedNodesRule $rule, Node $node): void
-    {
-        $errors = $rule->processNode($node, $this->scope);
-        $this->assertCount(1, $errors);
-        $error = $errors[0];
-        $this->assertStringStartsWith('ekinoBannedCode.', $error->getIdentifier());
-        $this->assertInstanceOf(NonIgnorableRuleError::class, $error);
-    }
-
-    protected function assertNodePasses(BannedNodesRule $rule, Node $node): void
-    {
-        $this->assertCount(0, $rule->processNode($node, $this->scope));
-    }
-
     public function testProcessNodeWithAllowedFunctions(): void
     {
         $rootFunction = new FuncCall(new Name('allowed'));
@@ -169,12 +138,22 @@ class BannedNodesRuleTest extends TestCase
     }
 
     /**
+     * Tests processNode with unhandled nodes.
+     *
+     * @param Expr $node
+     */
+    #[DataProvider('getUnhandledNodes')]
+    public function testProcessNodeWithUnhandledType(Expr $node): void
+    {
+        $this->assertCount(0, $this->rule->processNode($node, $this->scope));
+    }
+
+    /**
      * Tests processNode with handled nodes.
      *
      * @param Expr $node
-     *
-     * @dataProvider getHandledNodes
      */
+    #[DataProvider('getHandledNodes')]
     public function testProcessNodeWithHandledTypes(Expr $node): void
     {
         $this->assertNodeTriggersError($this->rule, $node);
@@ -183,19 +162,35 @@ class BannedNodesRuleTest extends TestCase
     /**
      * @return \Generator<array<Include_>>
      */
-    public function getUnhandledNodes(): \Generator
+    public static function getUnhandledNodes(): \Generator
     {
-        yield [new Include_($this->createMock(Expr::class), Include_::TYPE_INCLUDE)];
+        yield [new Include_(new String_('test'), Include_::TYPE_INCLUDE)];
     }
 
     /**
      * @return \Generator<array<mixed>>
      */
-    public function getHandledNodes(): \Generator
+    public static function getHandledNodes(): \Generator
     {
-        yield [new Eval_($this->createMock(Expr::class))];
+        $stringExpr = new String_('test');
+
+        yield [new Eval_($stringExpr)];
         yield [new Exit_()];
-        yield [new Print_($this->createMock(Expr::class))];
-        yield [new ShellExec([new String_('')])];
+        yield [new Print_($stringExpr)];
+        yield [new ShellExec([$stringExpr])];
+    }
+
+    protected function assertNodeTriggersError(BannedNodesRule $rule, Node $node): void
+    {
+        $errors = $rule->processNode($node, $this->scope);
+        $this->assertCount(1, $errors);
+        $error = $errors[0];
+        $this->assertStringStartsWith('ekinoBannedCode.', $error->getIdentifier());
+        $this->assertInstanceOf(NonIgnorableRuleError::class, $error);
+    }
+
+    protected function assertNodePasses(BannedNodesRule $rule, Node $node): void
+    {
+        $this->assertCount(0, $rule->processNode($node, $this->scope));
     }
 }
