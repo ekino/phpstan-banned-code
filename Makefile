@@ -11,7 +11,7 @@ app-composer-validate: ## to validate composer config
 	composer normalize --dry-run
 
 app-cs-check: ## to show files that need to be fixed
-	vendor/bin/php-cs-fixer fix --dry-run --diff --verbose
+	PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --dry-run --diff --verbose
 
 app-cs-fix: ## to fix files that need to be fixed
 	vendor/bin/php-cs-fixer fix --verbose
