@@ -92,7 +92,7 @@ class BannedUseTestRuleTest extends TestCase
     /**
      * @return iterable<string, array{string}>
      */
-    public static function testNamespaceDataProvider(): iterable
+    public static function namespaceDataProvider(): iterable
     {
         yield 'Tests namespace prefix' => ['Tests\\Foo\\Bar'];
         yield 'Nested test namespace' => ['Modules\\Foo\\Tests'];
