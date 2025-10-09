@@ -80,7 +80,7 @@ class BannedUseTestRuleTest extends TestCase
     }
 
     /**
-     * @dataProvider testNamespaceDataProvider
+     * @dataProvider namespaceDataProvider
      */
     public function testProcessNodeWithTestNamespaces(string $namespace): void
     {
