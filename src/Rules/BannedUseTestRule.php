@@ -51,7 +51,7 @@ class BannedUseTestRule implements Rule
             return [];
         }
 
-        if (preg_match('#^Tests#', $namespace)) {
+        if (preg_match('#(^Tests\\\\|\\\\Tests\\\\|\\\\Tests$|^Tests$)#', $namespace)) {
             return [];
         }
 
@@ -62,7 +62,7 @@ class BannedUseTestRule implements Rule
         $errors = [];
 
         foreach ($node->uses as $use) {
-            if (preg_match('#^Tests#', $use->name->toString())) {
+            if (preg_match('#(^Tests\\\\|\\\\Tests\\\\|\\\\Tests$|^Tests$)#', $use->name->toString())) {
                 $errors[] = $this->errorBuilder->buildError(
                     \sprintf('Should not use %s in the non-test file %s', $use->name->toString(), $scope->getFile()),
                     'test',
