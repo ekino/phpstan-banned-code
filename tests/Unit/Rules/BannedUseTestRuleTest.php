@@ -69,16 +69,6 @@ class BannedUseTestRuleTest extends TestCase
     }
 
     /**
-     * Tests processNode with test scope.
-     */
-    public function testProcessNodeWithTestScope(): void
-    {
-        $this->scope->expects($this->once())->method('getNamespace')->willReturn('Tests\\Foo\\Bar');
-
-        $this->assertCount(0, $this->rule->processNode($this->createMock(Use_::class), $this->scope));
-    }
-
-    /**
      * Asserts processNode throws an exception with invalid argument.
      */
     public function testProcessNodeThrowsException(): void
@@ -90,60 +80,42 @@ class BannedUseTestRuleTest extends TestCase
     }
 
     /**
-     * Tests processNode with errors.
+     * @dataProvider testNamespaceDataProvider
      */
-    public function testProcessNodeWithErrors(): void
+    public function testProcessNodeWithTestNamespaces(string $namespace): void
     {
-        $this->scope->expects($this->once())->method('getNamespace')->willReturn('Foo\\Bar');
-
-        $node = new Use_([
-            new UseUse(new Name('Foo\\Bar')),
-            new UseUse(new Name('Tests\\Foo\\Bar')),
-        ]);
-
-        $errors = $this->rule->processNode($node, $this->scope);
-        $this->assertCount(1, $errors);
-        $error = $errors[0];
-        $this->assertStringStartsWith('ekinoBannedCode.', $error->getIdentifier());
-        $this->assertInstanceOf(NonIgnorableRuleError::class, $error);
-    }
-
-    /**
-     * Tests processNode with nested test namespaces - Modules\Foo\Tests.
-     */
-    public function testProcessNodeWithNestedTestNamespace(): void
-    {
-        $this->scope->expects($this->once())->method('getNamespace')->willReturn('Modules\\Foo\\Tests');
+        $this->scope->expects($this->once())->method('getNamespace')->willReturn($namespace);
 
         $this->assertCount(0, $this->rule->processNode($this->createMock(Use_::class), $this->scope));
     }
 
     /**
-     * Tests processNode with deeply nested test namespaces - Modules\Foo\Tests\Models\State.
+     * @return iterable<string, array{string}>
      */
-    public function testProcessNodeWithDeeplyNestedTestNamespace(): void
+    public static function testNamespaceDataProvider(): iterable
     {
-        $this->scope->expects($this->once())->method('getNamespace')->willReturn('Modules\\Foo\\Tests\\Models\\State');
-
-        $this->assertCount(0, $this->rule->processNode($this->createMock(Use_::class), $this->scope));
+        yield 'Tests namespace prefix' => ['Tests\\Foo\\Bar'];
+        yield 'Nested test namespace' => ['Modules\\Foo\\Tests'];
+        yield 'Deeply nested test namespace' => ['Modules\\Foo\\Tests\\Models\\State'];
+        yield 'Trailing Tests segment' => ['App\\Module\\Tests'];
     }
 
     /**
-     * Tests processNode detects banned use statements for nested test classes.
+     * @dataProvider errorCasesDataProvider
      */
-    public function testProcessNodeWithErrorsForNestedTestClasses(): void
-    {
-        $this->scope->expects($this->once())->method('getNamespace')->willReturn('App\\Services');
+    public function testProcessNodeWithErrors(
+        string $namespace,
+        array $useStatements,
+        int $expectedErrorCount
+    ): void {
+        $this->scope->expects($this->once())->method('getNamespace')->willReturn($namespace);
 
-        $node = new Use_([
-            new UseUse(new Name('App\\Models\\User')),
-            new UseUse(new Name('Modules\\Foo\\Tests\\SomeTestHelper')),
-            new UseUse(new Name('Modules\\Bar\\Tests\\Models\\A')),
-        ]);
+        $uses = array_map(fn($use) => new UseUse(new Name($use)), $useStatements);
+        $node = new Use_($uses);
 
         $errors = $this->rule->processNode($node, $this->scope);
-        $this->assertCount(2, $errors);
-        
+        $this->assertCount($expectedErrorCount, $errors);
+
         foreach ($errors as $error) {
             $this->assertStringStartsWith('ekinoBannedCode.', $error->getIdentifier());
             $this->assertInstanceOf(NonIgnorableRuleError::class, $error);
@@ -151,28 +123,26 @@ class BannedUseTestRuleTest extends TestCase
     }
 
     /**
-     * Tests processNode with trailing Tests namespace segment.
+     * @return iterable<string, array{string, array<string>, int}>
      */
-    public function testProcessNodeWithTrailingTestsSegment(): void
+    public static function errorCasesDataProvider(): iterable
     {
-        $this->scope->expects($this->once())->method('getNamespace')->willReturn('App\\Module\\Tests');
+        yield 'Basic test import detection' => [
+            'Foo\\Bar',
+            ['Foo\\Bar', 'Tests\\Foo\\Bar'],
+            1
+        ];
 
-        $this->assertCount(0, $this->rule->processNode($this->createMock(Use_::class), $this->scope));
-    }
+        yield 'Multiple nested test imports' => [
+            'App\\Services',
+            ['App\\Models\\User', 'Modules\\Foo\\Tests\\SomeTestHelper', 'Modules\\Bar\\Tests\\Models\\A'],
+            2
+        ];
 
-    /**
-     * Tests processNode does not match partial 'Tests' strings.
-     */
-    public function testProcessNodeDoesNotMatchPartialTests(): void
-    {
-        $this->scope->expects($this->once())->method('getNamespace')->willReturn('App\\SomeTestsRelated\\Service');
-
-        $node = new Use_([
-            new UseUse(new Name('App\\SomeTestsRelated\\Model')),
-            new UseUse(new Name('App\\NotTestsButSimilar\\Helper')),
-        ]);
-
-        $errors = $this->rule->processNode($node, $this->scope);
-        $this->assertCount(0, $errors);
+        yield 'No test-related imports' => [
+            'App\\SomeTestsRelated\\Service',
+            ['App\\SomeTestsRelated\\Model', 'App\\NotTestsButSimilar\\Helper'],
+            0
+        ];
     }
 }

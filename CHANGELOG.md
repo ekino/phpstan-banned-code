@@ -14,6 +14,11 @@ master
 * Added empty() to the list of banned functions
 * Added PHP 8.4 to the CI run
 
+v3.1.0
+------
+
+* Added support for nested namespaces for tests in `BannedUseTestRule`
+
 v3.0.0
 ------
 

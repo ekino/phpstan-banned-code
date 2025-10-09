@@ -25,7 +25,8 @@ class BannedUseTestRule implements Rule
 {
     public function __construct(
         private readonly bool $enabled,
-        private readonly BannedNodesErrorBuilder $errorBuilder
+        private readonly BannedNodesErrorBuilder $errorBuilder,
+        private readonly string $pattern = '(^|\\\\)Tests($|\\\\)'
     )
     {
     }
@@ -51,7 +52,7 @@ class BannedUseTestRule implements Rule
             return [];
         }
 
-        if (preg_match('#(^Tests\\\\|\\\\Tests\\\\|\\\\Tests$|^Tests$)#', $namespace)) {
+        if (preg_match("#{$this->pattern}#", $namespace)) {
             return [];
         }
 
@@ -62,7 +63,7 @@ class BannedUseTestRule implements Rule
         $errors = [];
 
         foreach ($node->uses as $use) {
-            if (preg_match('#(^Tests\\\\|\\\\Tests\\\\|\\\\Tests$|^Tests$)#', $use->name->toString())) {
+            if (preg_match("#{$this->pattern}#", $use->name->toString())) {
                 $errors[] = $this->errorBuilder->buildError(
                     \sprintf('Should not use %s in the non-test file %s', $use->name->toString(), $scope->getFile()),
                     'test',
