@@ -90,7 +90,7 @@ class BannedUseTestRuleTest extends TestCase
     }
 
     /**
-     * @return iterable<string, array{string}>
+     * @return iterable<string, list<string>>
      */
     public static function namespaceDataProvider(): iterable
     {
@@ -102,6 +102,7 @@ class BannedUseTestRuleTest extends TestCase
 
     /**
      * @dataProvider errorCasesDataProvider
+     * @param list<string> $useStatements
      */
     public function testProcessNodeWithErrors(
         string $namespace,
