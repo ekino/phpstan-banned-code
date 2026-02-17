@@ -44,7 +44,6 @@ class BannedUseTestRuleTest extends TestCase
             new BannedNodesErrorBuilder(true)
         );
 
-        /** @phpstan-ignore-next-line */
         $this->scope = $this->createMockForIntersectionOfInterfaces([
             NodeCallbackInvoker::class,
             Scope::class,
