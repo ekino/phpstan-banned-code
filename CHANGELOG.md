@@ -12,7 +12,8 @@ master
 * Updated phpunit/phpunit to 10.5
 * Updated symfony/var-dumper to 6.4
 * Added empty() to the list of banned functions
-* Added PHP 8.4 to the CI run
+* Added PHP 8.4 and 8.5 to the CI run
+* Removed support for PHP 8.1
 * Added support for nested namespaces for tests in `BannedUseTestRule`
 
 v3.0.0
