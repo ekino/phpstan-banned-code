@@ -17,7 +17,7 @@
     ],
     "homepage": "https://github.com/ekino/phpstan-banned-code",
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "phpstan/phpstan": "^2.0"
     },
     "require-dev": {
