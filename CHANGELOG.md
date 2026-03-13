@@ -6,6 +6,11 @@ master
 
 * todo...
 
+v3.2.0
+------
+
+* Revert #79 leading to a BC break and reflects as a strict/opinionated rule
+
 v3.1.0
 ------
 
