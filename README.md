@@ -60,6 +60,7 @@ parameters:
 					- phpinfo
 					- print_r
 					- proc_open
+					- ray
 					- shell_exec
 					- system
 					- var_dump
