@@ -19,6 +19,7 @@ use PhpParser\Node;
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Use_;
 use PhpParser\Node\Stmt\UseUse;
+use PHPStan\Analyser\CollectedDataEmitter;
 use PHPStan\Analyser\NodeCallbackInvoker;
 use PHPStan\Analyser\Scope;
 use PHPStan\Rules\NonIgnorableRuleError;
@@ -32,7 +33,7 @@ class BannedUseTestRuleTest extends TestCase
 {
     private BannedUseTestRule $rule;
 
-    private NodeCallbackInvoker&Scope&MockObject $scope;
+    private CollectedDataEmitter&Scope&NodeCallbackInvoker&MockObject $scope;
 
     /**
      * {@inheritdoc}
@@ -45,6 +46,7 @@ class BannedUseTestRuleTest extends TestCase
         );
 
         $this->scope = $this->createMockForIntersectionOfInterfaces([
+            CollectedDataEmitter::class,
             NodeCallbackInvoker::class,
             Scope::class,
         ]);
